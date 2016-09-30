@@ -1,0 +1,6 @@
+{
+    "records": 100,
+    "getRecords": 500,
+    "upsertRecords": 1500,
+    "bulk": 2000
+}

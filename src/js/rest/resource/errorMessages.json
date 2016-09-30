@@ -1,0 +1,22 @@
+{
+    "required": {
+        "app": "\"params\" needs \"app\".",
+        "id": "\"params\" needs \"id\".",
+        "idOrUpdateKey": "\"params\" needs \"id\" or \"updateKey\".",
+        "updateKey": "\"params\" needs \"updateKey\", \"updateKey.field\" and \"updateKey.value\"."
+    },
+    "shouldBeArray": {
+        "records": "\"records\" should be Array.",
+        "ids": "\"ids\" should be Array."
+    },
+    "overLength": {
+        "recordsLessThan2000": "\"records\" should be less than or equal to 2,000.",
+        "recordsLessThan1500": "\"records\" should be less than or equal to 1,500.",
+        "ids": "\"ids.length\" should be less than or equal to 2,000."
+    },
+    "emptyArray": {
+        "records": "\"records\" is empty. \"records\" needs to contain one record at least.",
+        "ids": "\"ids\" is empty. \"ids\" needs to contain one id at least."
+    },
+    "notUniqueField": "\"params.updateKey\" is not unique field."
+}
