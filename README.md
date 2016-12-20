@@ -6,7 +6,10 @@ This is a library in order to simplify the kintone customization.
 
 ## Usage
 1. Download kintoneUtility.min.js and kintoneUtility.min.css (Future) from [releases](https://github.com/kintone/kintoneUtility/releases).
+   Or copy the following URL.
+   https://kintone.github.io/kintoneUtility/kintoneUtility.min.js
 2. Upload them to kintone following help site. ([Setting JavaScript Customization on kintone](https://help.kintone.com/en/k/user/js_customize.html))
+   Or add the copied URL.
 3. You can use kintoneUtility Object on your code!
 
 ## Document
