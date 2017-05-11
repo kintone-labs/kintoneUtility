@@ -3,7 +3,9 @@
         "app": "\"params\" needs \"app\".",
         "id": "\"params\" needs \"id\".",
         "idOrUpdateKey": "\"params\" needs \"id\" or \"updateKey\".",
-        "updateKey": "\"params\" needs \"updateKey\", \"updateKey.field\" and \"updateKey.value\"."
+        "updateKey": "\"params\" needs \"updateKey\", \"updateKey.field\" and \"updateKey.value\".",
+        "fileKey": "\"params\" needs \"fileKey\".",
+        "fileNameOrBlob": "\"params\" needs \"fileName\" and \"blob\"."
     },
     "shouldBeArray": {
         "records": "\"records\" should be Array.",
@@ -18,5 +20,11 @@
         "records": "\"records\" is empty. \"records\" needs to contain one record at least.",
         "ids": "\"ids\" is empty. \"ids\" needs to contain one id at least."
     },
-    "notUniqueField": "\"params.updateKey\" is not unique field."
+    "notUniqueField": "\"params.updateKey\" is not unique field.",
+    "emptyLoginNameOrPass": "\"loginName\" or \"password\" is empty. Usage: kintoneUtility.rest.setUserAuth('loginName', 'password')",
+    "emptyUserNameOrPass": "\"userName\" or \"password\" is empty. Usage: kintoneUtility.rest.setBasicAuth('userName', 'password')",
+    "emptyApiToken": "\"apiToken\" is empty. Usage: kintoneUtility.rest.setApiTokenAuth('apiToken')",
+    "emptyDomain": "\"domain\" is empty. Usage: kintoneUtility.rest.setDomain('xxxx.cybozu.com')",
+    "emptyGuestSpaceId": "\"guestSpaceId\" is empty. Usage: kintoneUtility.rest.setGuestSpaceId('guestSpaceId')",
+    "useSetDomain": "Can't make a request url. Please use kintoneUtility.rest.setDomain."
 }

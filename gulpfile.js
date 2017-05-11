@@ -22,10 +22,9 @@ gulp.task('js', function () {
             plugins: [
                 new webpack.optimize.UglifyJsPlugin()
             ],
-            devtool: 'inline-source-map'
+            //devtool: 'inline-source-map'
         }, webpack))
-        .pipe(gulp.dest('dist/'))
-        .pipe(gulp.dest('../../Dropbox/tmp'));
+        .pipe(gulp.dest('docs/'))
 });
 
 //build CSS
@@ -36,7 +35,7 @@ gulp.task('css', function() {
   return gulp.src('src/style/*.css')
     .pipe(cleanCSS())
     .pipe(concat('kintoneUtility-UI.min.css'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('docs/'));
   */
 });
 

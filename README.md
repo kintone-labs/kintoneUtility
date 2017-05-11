@@ -2,7 +2,7 @@
 This is a library in order to simplify the kintone customization.
 
 ## Version
-0.1.0
+0.2.0
 
 ## Usage
 1. Download kintoneUtility.min.js and kintoneUtility.min.css (Future) from [releases](https://github.com/kintone/kintoneUtility/releases).
@@ -13,7 +13,7 @@ This is a library in order to simplify the kintone customization.
 3. You can use kintoneUtility Object on your code!
 
 ## Document
-* [kintoneUtility.rest](./doc/rest_doc.md)
+* [kintoneUtility.rest](./guides/rest_doc.md)
 * kintoneUtility.ui (Future)
 
 ## Requirement
@@ -30,8 +30,8 @@ $ npm run watch (Automatically build when the sources are changed)
 ```
 
 ## Output
-* ./dist/kintoneUtility.min.js
-* ./dist/kintoneUtility.min.css (Future)
+* ./docs/kintoneUtility.min.js
+* ./docs/kintoneUtility.min.css (Future)
 
 ## License
 MIT
