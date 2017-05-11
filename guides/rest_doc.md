@@ -434,8 +434,7 @@ kintoneUtility.rest.putAllRecords({
 | param | Object | Yes |  |
 | param.app | Number | Yes | The app ID.
 | param.ids | Array | Yes | Array of record IDs that will be deleted.
-| param.revisions | Array | No | The expected revision number.
-The first id number will correspond to the first revision number in the array, the second id to the second revision number, and so on.<br>If the revision number does not match, an error will occur and no records will be deleted.<br>If the revision number is left blank or is -1, the revision number will not be checked for the corresponding record ID.
+| param.revisions | Array | No | The expected revision number. The first id number will correspond to the first revision number in the array, the second id to the second revision number, and so on.<br>If the revision number does not match, an error will occur and no records will be deleted.<br>If the revision number is left blank or is -1, the revision number will not be checked for the corresponding record ID.
 | param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
 
 #### Response

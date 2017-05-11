@@ -27,15 +27,14 @@ export default (params) => {
         return createError(errors.emptyArray.ids)
     }
 
+    let isGuest = (params.isGuest) ? true : false
     let param = makeBulkParam({
         app: params.app,
         ids: params.ids,
-        method: 'DELETE'
+        revisions: params.revisions,
+        method: 'DELETE',
+        isGuest: isGuest
     })
-    if (params.revisions) {
-        param.revisions = params.revisions
-    }
-    let isGuest = (params.isGuest) ? true : false
 
     return sendRequest('/k/v1/bulkRequest', 'POST', param, isGuest)
 }

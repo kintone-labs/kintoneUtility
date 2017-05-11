@@ -45,20 +45,22 @@ export default (params) => {
     }
 
     let sendUpsertBulkRequest = (postRecords, putRecords) => {
+        let isGuest = (params.isGuest) ? true : false
         let postBulkParam = makeBulkParam({
             app: params.app,
             records: postRecords,
-            method: 'POST'
+            method: 'POST',
+            isGuest: isGuest
         })
         let putBulkParam = makeBulkParam({
             app: params.app,
             records: putRecords,
-            method: 'PUT'
+            method: 'PUT',
+            isGuest: isGuest
         })
         let param = {
             requests: postBulkParam.requests.concat(putBulkParam.requests)
         }
-        let isGuest = (params.isGuest) ? true : false
 
         return sendRequest('/k/v1/bulkRequest', 'POST', param, isGuest)
     }

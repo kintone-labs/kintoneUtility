@@ -4,6 +4,26 @@ var webpack = require('webpack');
 
 //build JS
 gulp.task('js', function () {
+    //kintoneUtility.js
+    gulp.src('src/js/main.js')
+        .pipe(webpackStream({
+            output: {
+                filename: 'kintoneUtility.js'
+            },
+            module: {
+                loaders: [
+                    {
+                        loader: 'babel-loader',
+                        query: {
+                            presets: 'es2015',
+                        },
+                    }
+                ]
+            },
+            //devtool: 'inline-source-map'
+        }, webpack))
+        .pipe(gulp.dest('docs/'))
+    //kintoneUtility.min.js
     gulp.src('src/js/main.js')
         .pipe(webpackStream({
             output: {
