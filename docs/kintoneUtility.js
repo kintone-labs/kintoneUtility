@@ -42,7 +42,7 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -186,9 +186,9 @@
 
 	window.kintoneUtility = kintoneUtility;
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -236,9 +236,9 @@
 	    return (0, _sendRequest2.default)('/k/v1/record', 'GET', param, isGuest);
 	};
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -262,9 +262,9 @@
 	    });
 	};
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global) {'use strict';
 
@@ -1428,9 +1428,9 @@
 	//# sourceMappingURL=es6-promise.map
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), (function() { return this; }())))
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -1599,6 +1599,12 @@
 	process.removeListener = noop;
 	process.removeAllListeners = noop;
 	process.emit = noop;
+	process.prependListener = noop;
+	process.prependOnceListener = noop;
+
+	process.listeners = function (name) {
+	    return [];
+	};
 
 	process.binding = function (name) {
 	    throw new Error('process.binding is not supported');
@@ -1614,15 +1620,15 @@
 	    return 0;
 	};
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/* (ignored) */
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"required": {
@@ -1655,9 +1661,9 @@
 		"useSetDomain": "Can't make a request url. Please use kintoneUtility.rest.setDomain."
 	};
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -1698,9 +1704,9 @@
 	    }
 	};
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -1849,9 +1855,9 @@
 	    });
 	};
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -1901,9 +1907,9 @@
 	    return (0, _sendRequest2.default)('/k/v1/records', 'GET', param, isGuest);
 	};
 
-/***/ },
+/***/ }),
 /* 10 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -1968,9 +1974,9 @@
 
 	exports.default = getAllRecordsByQuery;
 
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"records": 100,
@@ -1979,9 +1985,9 @@
 		"bulk": 2000
 	};
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2027,9 +2033,9 @@
 	    return (0, _sendRequest2.default)('/k/v1/record', 'POST', param, isGuest);
 	};
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2093,9 +2099,9 @@
 	    return (0, _sendRequest2.default)('/k/v1/bulkRequest', 'POST', param, isGuest);
 	};
 
-/***/ },
+/***/ }),
 /* 14 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2154,9 +2160,9 @@
 	    return bulkParam;
 	};
 
-/***/ },
+/***/ }),
 /* 15 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2232,9 +2238,9 @@
 	    return postAll();
 	};
 
-/***/ },
+/***/ }),
 /* 16 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2259,9 +2265,9 @@
 	  return arr.slice(begin, end);
 	};
 
-/***/ },
+/***/ }),
 /* 17 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2323,9 +2329,9 @@
 	    return (0, _sendRequest2.default)('/k/v1/record', 'PUT', param, isGuest);
 	};
 
-/***/ },
+/***/ }),
 /* 18 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2389,9 +2395,9 @@
 	    return (0, _sendRequest2.default)('/k/v1/bulkRequest', 'POST', param, isGuest);
 	};
 
-/***/ },
+/***/ }),
 /* 19 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2467,9 +2473,9 @@
 	    return putAll();
 	};
 
-/***/ },
+/***/ }),
 /* 20 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2535,9 +2541,9 @@
 	    return (0, _sendRequest2.default)('/k/v1/bulkRequest', 'POST', param, isGuest);
 	};
 
-/***/ },
+/***/ }),
 /* 21 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2613,9 +2619,9 @@
 	    return deleteAll();
 	};
 
-/***/ },
+/***/ }),
 /* 22 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2666,9 +2672,9 @@
 	    });
 	};
 
-/***/ },
+/***/ }),
 /* 23 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2736,9 +2742,9 @@
 	    });
 	};
 
-/***/ },
+/***/ }),
 /* 24 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -2860,9 +2866,9 @@
 	    });
 	};
 
-/***/ },
+/***/ }),
 /* 25 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {'use strict';
 
@@ -2888,9 +2894,9 @@
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26).Buffer))
 
-/***/ },
+/***/ }),
 /* 26 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
 	 * The buffer module from node.js, for the browser.
@@ -4631,9 +4637,9 @@
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
-/***/ },
+/***/ }),
 /* 27 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -4750,9 +4756,9 @@
 	  return parts.join('');
 	}
 
-/***/ },
+/***/ }),
 /* 28 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -4841,9 +4847,9 @@
 	  buffer[offset + i - d] |= s * 128;
 	};
 
-/***/ },
+/***/ }),
 /* 29 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -4853,9 +4859,9 @@
 	  return toString.call(arr) == '[object Array]';
 	};
 
-/***/ },
+/***/ }),
 /* 30 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {'use strict';
 
@@ -4881,9 +4887,9 @@
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26).Buffer))
 
-/***/ },
+/***/ }),
 /* 31 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -4907,9 +4913,9 @@
 	    kintoneUtility.rest.apiToken = apiToken;
 	};
 
-/***/ },
+/***/ }),
 /* 32 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -4933,9 +4939,9 @@
 	    kintoneUtility.rest.domain = domain;
 	};
 
-/***/ },
+/***/ }),
 /* 33 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -4959,9 +4965,9 @@
 	    kintoneUtility.rest.guestSpaceId = guestSpaceId;
 	};
 
-/***/ },
+/***/ }),
 /* 34 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -4975,9 +4981,9 @@
 	  kintoneUtility.rest.basicAuthBase64 = undefined;
 	};
 
-/***/ },
+/***/ }),
 /* 35 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -4991,9 +4997,9 @@
 	  kintoneUtility.rest.userAuthBase64 = undefined;
 	};
 
-/***/ },
+/***/ }),
 /* 36 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -5007,9 +5013,9 @@
 	  kintoneUtility.rest.apiToken = undefined;
 	};
 
-/***/ },
+/***/ }),
 /* 37 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -5023,9 +5029,9 @@
 	  kintoneUtility.rest.domain = undefined;
 	};
 
-/***/ },
+/***/ }),
 /* 38 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -5039,9 +5045,9 @@
 	  kintoneUtility.rest.guestSpaceId = undefined;
 	};
 
-/***/ },
+/***/ }),
 /* 39 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -5085,9 +5091,9 @@
 	    return (0, _sendRequest2.default)('/k/v1/file', 'GET', param, isGuest);
 	};
 
-/***/ },
+/***/ }),
 /* 40 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -5133,5 +5139,5 @@
 	    return (0, _sendRequest2.default)('/k/v1/file', 'POST', param, isGuest);
 	};
 
-/***/ }
+/***/ })
 /******/ ]);
