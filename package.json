@@ -1,6 +1,6 @@
 {
   "name": "kintone_utility",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "kintone utilities.",
   "scripts": {
     "build": "gulp",
@@ -18,5 +18,8 @@
     "json-loader": "^0.5.4",
     "webpack": "^1.13.2",
     "webpack-stream": "^3.2.0"
+  },
+  "dependencies": {
+    "es6-promise": "^4.1.0"
   }
 }

@@ -4,6 +4,26 @@ var webpack = require('webpack');
 
 //build JS
 gulp.task('js', function () {
+    //kintoneUtility.js
+    gulp.src('src/js/main.js')
+        .pipe(webpackStream({
+            output: {
+                filename: 'kintoneUtility.js'
+            },
+            module: {
+                loaders: [
+                    {
+                        loader: 'babel-loader',
+                        query: {
+                            presets: 'es2015',
+                        },
+                    }
+                ]
+            },
+            //devtool: 'inline-source-map'
+        }, webpack))
+        .pipe(gulp.dest('docs/'))
+    //kintoneUtility.min.js
     gulp.src('src/js/main.js')
         .pipe(webpackStream({
             output: {
@@ -22,10 +42,9 @@ gulp.task('js', function () {
             plugins: [
                 new webpack.optimize.UglifyJsPlugin()
             ],
-            devtool: 'inline-source-map'
+            //devtool: 'inline-source-map'
         }, webpack))
-        .pipe(gulp.dest('dist/'))
-        .pipe(gulp.dest('../../Dropbox/tmp'));
+        .pipe(gulp.dest('docs/'))
 });
 
 //build CSS
@@ -36,7 +55,7 @@ gulp.task('css', function() {
   return gulp.src('src/style/*.css')
     .pipe(cleanCSS())
     .pipe(concat('kintoneUtility-UI.min.css'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('docs/'));
   */
 });
 

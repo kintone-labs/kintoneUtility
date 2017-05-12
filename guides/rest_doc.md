@@ -1,5 +1,6 @@
 # kintoneUtility.rest Specification
 
+## Record
 * [kintoneUtility.rest.getRecord](#getRecord)
 * [kintoneUtility.rest.getRecords](#getRecords)
 * [kintoneUtility.rest.getAllRecordsByQuery](#getAllRecordsByQuery)
@@ -13,7 +14,21 @@
 * [kintoneUtility.rest.deleteAllRecords](#deleteAllRecords)
 * [kintoneUtility.rest.deleteAllRecordsByQuery](#deleteAllRecordsByQuery)
 * [kintoneUtility.rest.upsertRecord](#upsertRecord)
-* [kintoneUtility.rest.upsertRecords](#upsertRecords)  
+* [kintoneUtility.rest.upsertRecords](#upsertRecords)
+* [kintoneUtility.rest.downloadFile](#downloadFile)
+* [kintoneUtility.rest.uploadFile](#uploadFile)
+
+## Authentication
+* [kintoneUtility.rest.setUserAuth](#setUserAuth)
+* [kintoneUtility.rest.setApiTokenAuth](#setApiTokenAuth)
+* [kintoneUtility.rest.setDomain](#setDomain)
+* [kintoneUtility.rest.setBasicAuth](#setBasicAuth)
+* [kintoneUtility.rest.setGuestSpaceId](#setGuestSpaceId)
+* [kintoneUtility.rest.clearUserAuth](#clearUserAuth)
+* [kintoneUtility.rest.clearApiTokenAuth](#clearApiTokenAuth)
+* [kintoneUtility.rest.clearDomain](#clearDomain)
+* [kintoneUtility.rest.clearBasicAuth](#clearBasicAuth)
+* [kintoneUtility.rest.clearGuestSpaceId](#clearGuestSpaceId)  
 
 ## <a name="getRecord"> kintoneUtility.rest.getRecord(param)
 * Get a single record.
@@ -419,8 +434,7 @@ kintoneUtility.rest.putAllRecords({
 | param | Object | Yes |  |
 | param.app | Number | Yes | The app ID.
 | param.ids | Array | Yes | Array of record IDs that will be deleted.
-| param.revisions | Array | No | The expected revision number.
-The first id number will correspond to the first revision number in the array, the second id to the second revision number, and so on.<br>If the revision number does not match, an error will occur and no records will be deleted.<br>If the revision number is left blank or is -1, the revision number will not be checked for the corresponding record ID.
+| param.revisions | Array | No | The expected revision number. The first id number will correspond to the first revision number in the array, the second id to the second revision number, and so on.<br>If the revision number does not match, an error will occur and no records will be deleted.<br>If the revision number is left blank or is -1, the revision number will not be checked for the corresponding record ID.
 | param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
 
 #### Response
@@ -603,4 +617,252 @@ kintoneUtility.rest.upsertRecords({
 }).catch(function(error) {
   console.log(error);
 });
+```
+
+## <a name="downloadFile"> kintoneUtility.rest.downloadFile(param)
+* Download a file attached to record.
+* You can get file key by "kintoneUtility.rest.getRecord" or "kintoneUtility.rest.getRecords".
+
+#### Parameter 
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| param | Object | Yes |  |
+| param.fileKey | String | Yes | The file key that you want to download.
+| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
+
+#### Response
+```
+Promise Object
+```
+#### Sample
+```js
+kintoneUtility.rest.downloadFile({
+  fileKey: '20170403061310F33E961E5B7C43079759269996409F50150',
+  isGuest: false
+}).then(function(response) {
+  console.log(response); //Blob
+}).catch(function(error) {
+  console.log(error);
+});
+```
+
+## <a name="uploadFile"> kintoneUtility.rest.uploadFile(param)
+* Upload a file to kintone.
+* Should specify Blob format data.
+
+#### Parameter 
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| param | Object | Yes |  |
+| param.fileName | String | Yes | The file name you will upload.
+| param.blob | Object | Yes | The blob format data.
+| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
+
+#### Response
+```
+Promise Object
+```
+#### Sample
+```js
+kintoneUtility.rest.uploadFile({
+  fileName: 'sample.txt',
+  blob: new Blob(['Sample Text File'], {type:'text\/plain'}),
+  isGuest: false
+}).then(function(response) {
+  console.log(response); //fileKey
+}).catch(function(error) {
+  console.log(error);
+});
+```
+
+## <a name="setUserAuth"> kintoneUtility.rest.setUserAuth(loginName, password)
+* Specify login name and password when execute API except for user logged in to kintone.
+
+#### Parameter 
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| loginName | String | Yes | The login name for user authentication. |
+| password | String | Yes | The password for user authentication.
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.setUserAuth('loginName', 'password');
+```
+
+## <a name="setApiTokenAuth"> kintoneUtility.rest.setApiTokenAuth(apiToken)
+* Specify API token when you need to execute API by token.
+
+#### Parameter 
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| apiToken | String | Yes | The API Token that will be created by app. 
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.setApiTokenAuth('vZCkStSK3SD7zyHh17auyRrBJajjFrVaffit738');
+```
+
+## <a name="setDomain"> kintoneUtility.rest.setDomain(domain)
+* Specify the domain when you need.
+* In many cases it is not necessary.
+
+#### Parameter 
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| domain | String | Yes | Your kintone's domain. (e.g. 'sample.cybozu.com')
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.setDomain('sample.cybozu.com');
+```
+
+## <a name="setBasicAuth"> kintoneUtility.rest.setBasicAuth(userName, password)
+* Specify user name and password for basic authentication when you need.
+* In many cases it is not necessary.
+
+#### Parameter 
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| userName | String | Yes | The user name for basic authentication. |
+| password | String | Yes | The password for basic authentication.
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.setBasicAuth('userName', 'password');
+```
+
+## <a name="setGuestSpaceId"> kintoneUtility.rest.setGuestSpaceId(guestSpaceId)
+* Can specify guest space ID.
+* isGuest parameter is not necessary when you use "kintoneUtility.rest.setGuestSpaceId".
+
+#### Parameter 
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| guestSpaceId | Number | Yes | The guest space ID to which the application belongs.
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.setGuestSpaceId('12');
+```
+
+## <a name="clearUserAuth"> kintoneUtility.rest.clearUserAuth()
+* Clear the info that you set by "kintoneUtility.rest.setUserAuth".
+
+#### Parameter 
+```
+None
+```
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.clearUserAuth();
+```
+
+## <a name="clearApiTokenAuth"> kintoneUtility.rest.clearApiTokenAuth()
+* Clear the info that you set by "kintoneUtility.rest.setApiTokenAuth".
+
+#### Parameter 
+```
+None
+```
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.clearApiTokenAuth();
+```
+
+## <a name="clearDomain"> kintoneUtility.rest.clearDomain()
+* Clear the info that you set by "kintoneUtility.rest.setDomain".
+
+#### Parameter 
+```
+None
+```
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.clearDomain();
+```
+
+## <a name="clearBasicAuth"> kintoneUtility.rest.clearBasicAuth()
+* Clear the info that you set by "kintoneUtility.rest.setBasicAuth".
+
+#### Parameter 
+```
+None
+```
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.clearBasicAuth();
+```
+
+## <a name="clearGuestSpaceId"> kintoneUtility.rest.clearGuestSpaceId()
+* Clear the info that you set by "kintoneUtility.rest.setGuestSpaceId".
+
+#### Parameter 
+```
+None
+```
+
+#### Response
+```
+None
+```
+
+#### Sample
+```js
+kintoneUtility.rest.clearGuestSpaceId();
 ```

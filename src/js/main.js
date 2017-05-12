@@ -14,6 +14,18 @@ import deleteAllRecords from './rest/deleteAllRecords'
 import deleteAllRecordsByQuery from './rest/deleteAllRecordsByQuery'
 import upsertRecord from './rest/upsertRecord'
 import upsertRecords from './rest/upsertRecords'
+import setBasicAuth from './rest/setBasicAuth'
+import setUserAuth from './rest/setUserAuth'
+import setApiTokenAuth from './rest/setApiTokenAuth'
+import setDomain from './rest/setDomain'
+import setGuestSpaceId from './rest/setGuestSpaceId'
+import clearBasicAuth from './rest/clearBasicAuth'
+import clearUserAuth from './rest/clearUserAuth'
+import clearApiTokenAuth from './rest/clearApiTokenAuth'
+import clearDomain from './rest/clearDomain'
+import clearGuestSpaceId from './rest/clearGuestSpaceId'
+import downloadFile from './rest/downloadFile'
+import uploadFile from './rest/uploadFile'
 
 let kintoneUtility = {
     rest: {},
@@ -33,5 +45,18 @@ kintoneUtility.rest.deleteAllRecords = deleteAllRecords
 kintoneUtility.rest.deleteAllRecordsByQuery = deleteAllRecordsByQuery
 kintoneUtility.rest.upsertRecord = upsertRecord
 kintoneUtility.rest.upsertRecords = upsertRecords
+kintoneUtility.rest.downloadFile = downloadFile
+kintoneUtility.rest.uploadFile = uploadFile
+
+kintoneUtility.rest.setBasicAuth = setBasicAuth
+kintoneUtility.rest.setUserAuth = setUserAuth
+kintoneUtility.rest.setApiTokenAuth = setApiTokenAuth
+kintoneUtility.rest.setDomain = setDomain
+kintoneUtility.rest.setGuestSpaceId = setGuestSpaceId
+kintoneUtility.rest.clearBasicAuth = clearBasicAuth
+kintoneUtility.rest.clearUserAuth = clearUserAuth
+kintoneUtility.rest.clearApiTokenAuth = clearApiTokenAuth
+kintoneUtility.rest.clearDomain = clearDomain
+kintoneUtility.rest.clearGuestSpaceId = clearGuestSpaceId
 
 window.kintoneUtility = kintoneUtility
