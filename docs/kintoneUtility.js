@@ -219,8 +219,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!(params && params.id)) {
@@ -231,7 +229,7 @@
 	        app: params.app,
 	        id: params.id
 	    };
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 
 	    return (0, _sendRequest2.default)('/k/v1/record', 'GET', param, isGuest);
 	};
@@ -1682,14 +1680,14 @@
 	 *  @param {string} method
 	 *  @param {object} param
 	 *  @param {boolean} isGuest
-	 * 
+	 *
 	 *  @return  {object} result
 	 */
 	exports.default = function (api, method, param, isGuest) {
-	    var isUserAuth = kintoneUtility.rest.userAuthBase64 ? true : false;
-	    var isApiTokenAuth = kintoneUtility.rest.apiToken ? true : false;
-	    var isSpecifiedGuestSpaceId = kintoneUtility.rest.guestSpaceId ? true : false;
-	    var isFileApi = api.indexOf('file') > -1 ? true : false;
+	    var isUserAuth = Boolean(kintoneUtility.rest.userAuthBase64);
+	    var isApiTokenAuth = Boolean(kintoneUtility.rest.apiToken);
+	    var isSpecifiedGuestSpaceId = Boolean(kintoneUtility.rest.guestSpaceId);
+	    var isFileApi = api.indexOf('file') > -1;
 
 	    if (window && window.kintone && !isUserAuth && !isApiTokenAuth && !isSpecifiedGuestSpaceId && !isFileApi) {
 	        //use kintone.api
@@ -1699,8 +1697,6 @@
 	    } else if (window && window.XMLHttpRequest) {
 	        //use xmlhttp (include file api)
 	        return (0, _useXMLHttp2.default)(api, method, param, isGuest);
-	    } else {
-	        //use node (future)
 	    }
 	};
 
@@ -1727,18 +1723,20 @@
 	 *  @param {string} method
 	 *  @param {object} param
 	 *  @param {boolean} isGuest
-	 * 
+	 *
 	 *  @return  {object} result
 	 */
+	/*eslint no-underscore-dangle: 0*/
 	exports.default = function (api, method, param, isGuest) {
-	    var _makeRequestURL = function _makeRequestURL(api, method, isGuest) {
+	    var _makeRequestURL = function _makeRequestURL() {
 	        var _method = encodeURIComponent(method);
 	        var hostname = kintoneUtility.rest.domain ? kintoneUtility.rest.domain : location.hostname;
-	        if (!hostname) return false;
-
+	        if (!hostname) {
+	            return false;
+	        }
 	        if (kintoneUtility.rest.guestSpaceId) {
 	            var urlParts = api.split('/');
-	            return 'https://' + hostname + '/k/guest/' + kintoneUtility.rest.guestSpaceId + '/' + urlParts[2] + '/' + urlParts[3] + '.json?_method=' + _method;
+	            return 'https://' + hostname + '/k/guest/' + kintoneUtility.rest.guestSpaceId + '/' + (urlParts[2] + '/' + urlParts[3] + '.json?_method=' + _method);
 	        } else if (!isGuest) {
 	            return 'https://' + hostname + api + '.json?_method=' + _method;
 	        } else if (window && window.kintone && isGuest) {
@@ -1746,7 +1744,7 @@
 	        }
 	    };
 
-	    var _setOverrideHeader = function _setOverrideHeader(xhr, method) {
+	    var _setOverrideHeader = function _setOverrideHeader(xhr) {
 	        xhr.setRequestHeader('X-HTTP-Method-Override', method);
 	    };
 
@@ -1772,19 +1770,19 @@
 	        return false;
 	    };
 
-	    var _setRequestToken = function _setRequestToken(param) {
+	    var _setRequestToken = function _setRequestToken() {
 	        if (window && window.kintone) {
 	            param['__REQUEST_TOKEN__'] = kintone.getRequestToken();
 	        }
 	    };
 
-	    var _setHeaders = function _setHeaders(xhr, api, method) {
+	    var _setHeaders = function _setHeaders(xhr) {
 	        if (!(api.indexOf('file') > -1) || method !== 'POST') {
 	            xhr.setRequestHeader('Content-Type', 'application/json');
 	        }
 	        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
-	        _setOverrideHeader(xhr, method);
+	        _setOverrideHeader(xhr);
 	        _setBasicAuthHeader(xhr);
 	        var isUserAuth = _setUserAuthHeader(xhr);
 	        var isApiTokenAuth = _setApiTokenAuthHeader(xhr);
@@ -1794,7 +1792,7 @@
 	        return false;
 	    };
 
-	    var _send = function _send(xhr, param, resolve, reject) {
+	    var _send = function _send(xhr, resolve, reject) {
 	        xhr.onload = function (r) {
 	            if (xhr.status === 200) {
 	                resolve(JSON.parse(xhr.responseText));
@@ -1805,7 +1803,7 @@
 	        xhr.send(JSON.stringify(param));
 	    };
 
-	    var _getFile = function _getFile(xhr, param, resolve, reject) {
+	    var _getFile = function _getFile(xhr, resolve, reject) {
 	        xhr.responseType = 'blob';
 	        xhr.onload = function (r) {
 	            if (xhr.status === 200) {
@@ -1817,9 +1815,11 @@
 	        xhr.send(JSON.stringify(param));
 	    };
 
-	    var _postFile = function _postFile(xhr, param, resolve, reject) {
+	    var _postFile = function _postFile(xhr, resolve, reject) {
 	        var formData = new FormData();
-	        if (param['__REQUEST_TOKEN__']) formData.append('__REQUEST_TOKEN__', param['__REQUEST_TOKEN__']);
+	        if (param['__REQUEST_TOKEN__']) {
+	            formData.append('__REQUEST_TOKEN__', param['__REQUEST_TOKEN__']);
+	        }
 	        formData.append('file', param.blob, param.fileName);
 	        xhr.onload = function (r) {
 	            if (xhr.status === 200) {
@@ -1833,23 +1833,23 @@
 
 	    return new _es6Promise.Promise(function (resolve, reject) {
 	        var xhr = new XMLHttpRequest();
-	        var url = _makeRequestURL(api, method, isGuest);
+	        var url = _makeRequestURL();
 	        if (!url) {
 	            reject(_errorMessages2.default.useSetDomain);
 	        } else {
 	            xhr.open('POST', url, true);
-	            var isNeededCSRFToken = _setHeaders(xhr, api, method);
-	            if (isNeededCSRFToken) _setRequestToken(param);
+	            var isNeededCSRFToken = _setHeaders(xhr);
+	            if (isNeededCSRFToken) {
+	                _setRequestToken();
+	            }
 	            if (!(api.indexOf('file') > -1)) {
 	                //record
-	                _send(xhr, param, resolve, reject);
-	            } else {
+	                _send(xhr, resolve, reject);
+	            } else if (method === 'GET') {
 	                //file
-	                if (method === 'GET') {
-	                    _getFile(xhr, param, resolve, reject);
-	                } else {
-	                    _postFile(xhr, param, resolve, reject);
-	                }
+	                _getFile(xhr, resolve, reject);
+	            } else {
+	                _postFile(xhr, resolve, reject);
 	            }
 	        }
 	    });
@@ -1890,8 +1890,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    }
@@ -1902,7 +1900,7 @@
 	        fields: params.fields || [],
 	        totalCount: params.totalCount || false
 	    };
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 
 	    return (0, _sendRequest2.default)('/k/v1/records', 'GET', param, isGuest);
 	};
@@ -1944,22 +1942,20 @@
 	 *
 	 *  @return {object} result
 	 */
-	var getAllRecordsByQuery = function getAllRecordsByQuery(params, records, offset) {
-	    'use strict';
-
+	var getAllRecordsByQuery = function getAllRecordsByQuery(params, records, offsetNum) {
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    }
 
 	    var LIMIT = _limit2.default.getRecords;
 	    var allRecords = records || [];
-	    offset = offset || 0;
+	    var offset = offsetNum || 0;
 	    var param = {
 	        app: params.app,
 	        query: params.query ? params.query + ' limit ' + LIMIT + ' offset ' + offset : 'limit ' + LIMIT + ' offset ' + offset,
 	        fields: params.fields || []
 	    };
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 
 	    return (0, _sendRequest2.default)('/k/v1/records', 'GET', param, isGuest).then(function (response) {
 	        allRecords = allRecords.concat(response.records);
@@ -2018,8 +2014,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    }
@@ -2028,7 +2022,7 @@
 	        app: params.app,
 	        record: params.record
 	    };
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 
 	    return (0, _sendRequest2.default)('/k/v1/record', 'POST', param, isGuest);
 	};
@@ -2076,8 +2070,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!Array.isArray(params.records)) {
@@ -2088,7 +2080,7 @@
 	        return (0, _createError2.default)(_errorMessages2.default.emptyArray.records);
 	    }
 
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 	    var param = (0, _makeBulkParam2.default)({
 	        app: params.app,
 	        records: params.records,
@@ -2150,9 +2142,15 @@
 	                app: params.app
 	            }
 	        };
-	        if (params.records) request.payload.records = params.records.slice(begin, begin + LIMIT);
-	        if (params.ids) request.payload.ids = params.ids.slice(begin, begin + LIMIT);
-	        if (params.revisions) request.payload.revisions = params.revisions.slice(begin, begin + LIMIT);
+	        if (params.records) {
+	            request.payload.records = params.records.slice(begin, begin + LIMIT);
+	        }
+	        if (params.ids) {
+	            request.payload.ids = params.ids.slice(begin, begin + LIMIT);
+	        }
+	        if (params.revisions) {
+	            request.payload.revisions = params.revisions.slice(begin, begin + LIMIT);
+	        }
 	        bulkParam.requests.push(request);
 	        begin += LIMIT;
 	    }
@@ -2202,8 +2200,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!Array.isArray(params.records)) {
@@ -2214,9 +2210,9 @@
 
 	    var results = [];
 
-	    var postAll = function postAll(begin) {
-	        begin = begin || 0;
-	        var isGuest = params.isGuest ? true : false;
+	    var postAll = function postAll(beginNum) {
+	        var begin = beginNum || 0;
+	        var isGuest = Boolean(params.isGuest);
 	        var param = {
 	            app: params.app,
 	            records: (0, _sliceArray2.default)(params.records, begin),
@@ -2303,8 +2299,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!params.id && !params.updateKey) {
@@ -2324,7 +2318,7 @@
 	        param.updateKey = params.updateKey;
 	    }
 
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 
 	    return (0, _sendRequest2.default)('/k/v1/record', 'PUT', param, isGuest);
 	};
@@ -2372,8 +2366,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!Array.isArray(params.records)) {
@@ -2384,7 +2376,7 @@
 	        return (0, _createError2.default)(_errorMessages2.default.emptyArray.records);
 	    }
 
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 	    var param = (0, _makeBulkParam2.default)({
 	        app: params.app,
 	        records: params.records,
@@ -2437,8 +2429,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!Array.isArray(params.records)) {
@@ -2449,9 +2439,9 @@
 
 	    var results = [];
 
-	    var putAll = function putAll(begin) {
-	        begin = begin || 0;
-	        var isGuest = params.isGuest ? true : false;
+	    var putAll = function putAll(beginNum) {
+	        var begin = beginNum || 0;
+	        var isGuest = Boolean(params.isGuest);
 	        var param = {
 	            app: params.app,
 	            records: (0, _sliceArray2.default)(params.records, begin),
@@ -2517,8 +2507,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!Array.isArray(params.ids)) {
@@ -2529,7 +2517,7 @@
 	        return (0, _createError2.default)(_errorMessages2.default.emptyArray.ids);
 	    }
 
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 	    var param = (0, _makeBulkParam2.default)({
 	        app: params.app,
 	        ids: params.ids,
@@ -2583,8 +2571,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!Array.isArray(params.ids)) {
@@ -2595,9 +2581,9 @@
 
 	    var results = [];
 
-	    var deleteAll = function deleteAll(begin) {
-	        begin = begin || 0;
-	        var isGuest = params.isGuest ? true : false;
+	    var deleteAll = function deleteAll(beginNum) {
+	        var begin = beginNum || 0;
+	        var isGuest = Boolean(params.isGuest);
 	        var param = {
 	            app: params.app,
 	            ids: (0, _sliceArray2.default)(params.ids, begin),
@@ -2649,8 +2635,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    params.fields = ['$id'];
 	    return (0, _getAllRecordsByQuery2.default)(params).then(function (resp) {
 	        var ids = [];
@@ -2716,8 +2700,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use stiirict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!params.updateKey || !params.updateKey.field || !params.updateKey.value && params.updateKey.value !== '') {
@@ -2735,10 +2717,9 @@
 	        } else if (resp.records.length === 1) {
 	            //put
 	            return (0, _putRecord2.default)(params);
-	        } else {
-	            //not unique
-	            return (0, _createError2.default)(_errorMessages2.default.notUniqueField);
 	        }
+	        //not unique
+	        return (0, _createError2.default)(_errorMessages2.default.notUniqueField);
 	    });
 	};
 
@@ -2768,14 +2749,6 @@
 
 	var _getAllRecordsByQuery2 = _interopRequireDefault(_getAllRecordsByQuery);
 
-	var _postAllRecords = __webpack_require__(15);
-
-	var _postAllRecords2 = _interopRequireDefault(_postAllRecords);
-
-	var _putAllRecords = __webpack_require__(19);
-
-	var _putAllRecords2 = _interopRequireDefault(_putAllRecords);
-
 	var _sendRequest = __webpack_require__(7);
 
 	var _sendRequest2 = _interopRequireDefault(_sendRequest);
@@ -2797,8 +2770,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.app)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.app);
 	    } else if (!Array.isArray(params.records)) {
@@ -2825,7 +2796,7 @@
 	    };
 
 	    var sendUpsertBulkRequest = function sendUpsertBulkRequest(postRecords, putRecords) {
-	        var isGuest = params.isGuest ? true : false;
+	        var isGuest = Boolean(params.isGuest);
 	        var postBulkParam = (0, _makeBulkParam2.default)({
 	            app: params.app,
 	            records: postRecords,
@@ -5077,8 +5048,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.fileKey)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.fileKey);
 	    }
@@ -5086,7 +5055,7 @@
 	    var param = {
 	        fileKey: params.fileKey
 	    };
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 
 	    return (0, _sendRequest2.default)('/k/v1/file', 'GET', param, isGuest);
 	};
@@ -5124,8 +5093,6 @@
 	 *  @return {object} result
 	 */
 	exports.default = function (params) {
-	    'use strict';
-
 	    if (!(params && params.blob && params.fileName)) {
 	        return (0, _createError2.default)(_errorMessages2.default.required.fileNameOrBlob);
 	    }
@@ -5134,7 +5101,7 @@
 	        fileName: params.fileName,
 	        blob: params.blob
 	    };
-	    var isGuest = params.isGuest ? true : false;
+	    var isGuest = Boolean(params.isGuest);
 
 	    return (0, _sendRequest2.default)('/k/v1/file', 'POST', param, isGuest);
 	};

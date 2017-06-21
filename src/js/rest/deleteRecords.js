@@ -1,8 +1,8 @@
-import createError from './common/createError'
-import errors from '!json!./resource/errorMessages.json'
-import makeBulkParam from './common/makeBulkParam'
-import sendRequest from './common/sendRequest'
-import limit from '!json!./resource/limit.json'
+import createError from './common/createError';
+import errors from '!json!./resource/errorMessages.json';
+import makeBulkParam from './common/makeBulkParam';
+import sendRequest from './common/sendRequest';
+import limit from '!json!./resource/limit.json';
 
 /** Function: deleteRecords
  *   Can't delete over 2000 records.
@@ -16,25 +16,24 @@ import limit from '!json!./resource/limit.json'
  *  @return {object} result
  */
 export default (params) => {
-    'use strict'
     if (!(params && params.app)) {
-        return createError(errors.required.app)
+        return createError(errors.required.app);
     } else if (!Array.isArray(params.ids)) {
-        return createError(errors.shouldBeArray.ids)
+        return createError(errors.shouldBeArray.ids);
     } else if (params.ids && params.ids.length > limit.bulk) {
-        return createError(errors.overLength.ids)
+        return createError(errors.overLength.ids);
     } else if (params.ids && params.ids.length < 1) {
-        return createError(errors.emptyArray.ids)
+        return createError(errors.emptyArray.ids);
     }
 
-    let isGuest = (params.isGuest) ? true : false
+    let isGuest = Boolean(params.isGuest);
     let param = makeBulkParam({
         app: params.app,
         ids: params.ids,
         revisions: params.revisions,
         method: 'DELETE',
         isGuest: isGuest
-    })
+    });
 
-    return sendRequest('/k/v1/bulkRequest', 'POST', param, isGuest)
-}
+    return sendRequest('/k/v1/bulkRequest', 'POST', param, isGuest);
+};

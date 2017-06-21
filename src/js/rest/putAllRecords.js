@@ -1,8 +1,8 @@
-import createError from './common/createError'
-import errors from '!json!./resource/errorMessages.json'
-import putRecords from './putRecords'
-import sliceArray from './common/sliceArray'
-import limit from '!json!./resource/limit.json'
+import createError from './common/createError';
+import errors from '!json!./resource/errorMessages.json';
+import putRecords from './putRecords';
+import sliceArray from './common/sliceArray';
+import limit from '!json!./resource/limit.json';
 
 /** Function: putAllRecords
  *   Can update over 2000 records, but can't do rollback.
@@ -14,37 +14,36 @@ import limit from '!json!./resource/limit.json'
  *  @return {object} result
  */
 export default (params) => {
-    'use strict'
     if (!(params && params.app)) {
-        return createError(errors.required.app)
+        return createError(errors.required.app);
     } else if (!Array.isArray(params.records)) {
-        return createError(errors.shouldBeArray.records)
+        return createError(errors.shouldBeArray.records);
     } else if (params.records && params.records.length < 1) {
-        return createError(errors.emptyArray.records)
+        return createError(errors.emptyArray.records);
     }
 
-    let results = []
+    let results = [];
 
-    let putAll = (begin) => {
-        begin = begin || 0
-        let isGuest = (params.isGuest) ? true : false
+    let putAll = (beginNum) => {
+        let begin = beginNum || 0;
+        let isGuest = Boolean(params.isGuest);
         let param = {
             app: params.app,
             records: sliceArray(params.records, begin),
             isGuest: isGuest
-        }
+        };
 
         return putRecords(param).then((response) => {
-            results = results.concat(response.results)
-            begin += limit.bulk
+            results = results.concat(response.results);
+            begin += limit.bulk;
             if (params.records.length <= begin) {
                 return {
                     results: results
-                }
+                };
             }
-            return putAll(begin)
-        })
-    }
+            return putAll(begin);
+        });
+    };
 
-    return putAll()
-}
+    return putAll();
+};

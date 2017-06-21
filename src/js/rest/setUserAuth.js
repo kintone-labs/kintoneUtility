@@ -1,4 +1,4 @@
-import errors from '!json!./resource/errorMessages.json'
+import errors from '!json!./resource/errorMessages.json';
 
 /** Function: setUserAuth
  *  @param {string} loginName
@@ -6,7 +6,8 @@ import errors from '!json!./resource/errorMessages.json'
  */
 export default (loginName, password) => {
     if (!loginName || !password) {
-        throw errors.emptyLoginNameOrPass
+        throw errors.emptyLoginNameOrPass;
     }
-    kintoneUtility.rest.userAuthBase64 = (typeof(Buffer) !== 'undefined') ? (new Buffer(`${loginName}:${password}`)).toString('base64'): btoa(`${loginName}:${password}`)
-}
+    kintoneUtility.rest.userAuthBase64 = (typeof (Buffer) !== 'undefined') ?
+        (new Buffer(`${loginName}:${password}`)).toString('base64') : btoa(`${loginName}:${password}`);
+};

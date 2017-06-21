@@ -1,5 +1,5 @@
 /** Function: clearDomain
  */
 export default () => {
-    kintoneUtility.rest.domain = undefined
-}
+    kintoneUtility.rest.domain = undefined;
+};
