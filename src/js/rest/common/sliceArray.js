@@ -1,4 +1,4 @@
-import limit from '!json!../resource/limit.json'
+import limit from '!json!../resource/limit.json';
 
 /** Function: sliceArray
  *  @param {array} arr
@@ -7,6 +7,6 @@ import limit from '!json!../resource/limit.json'
  *  @return {object} result
  */
 export default (arr, begin) => {
-    let end = ((arr.length - begin) > limit.bulk) ? begin + limit.bulk : arr.length
-    return arr.slice(begin, end)
-}
+    let end = ((arr.length - begin) > limit.bulk) ? begin + limit.bulk : arr.length;
+    return arr.slice(begin, end);
+};

@@ -1,7 +1,7 @@
-import createError from './common/createError'
-import errors from '!json!./resource/errorMessages.json'
-import sendRequest from './common/sendRequest'
-import limit from '!json!./resource/limit.json'
+import createError from './common/createError';
+import errors from '!json!./resource/errorMessages.json';
+import sendRequest from './common/sendRequest';
+import limit from '!json!./resource/limit.json';
 
 /** Function: getAllRecordsByQuery
  *  @param {object} params
@@ -12,31 +12,30 @@ import limit from '!json!./resource/limit.json'
  *
  *  @return {object} result
  */
-let getAllRecordsByQuery = (params, records, offset) => {
-    'use strict'
+let getAllRecordsByQuery = (params, records, offsetNum) => {
     if (!(params && params.app)) {
-        return createError(errors.required.app)
+        return createError(errors.required.app);
     }
-    
-    const LIMIT = limit.getRecords
-    let allRecords = records || []
-    offset = offset || 0
+
+    const LIMIT = limit.getRecords;
+    let allRecords = records || [];
+    let offset = offsetNum || 0;
     let param = {
         app: params.app,
         query: (params.query) ? `${params.query} limit ${LIMIT} offset ${offset}` : `limit ${LIMIT} offset ${offset}`,
         fields: params.fields || []
-    }
-    let isGuest = (params.isGuest) ? true : false
+    };
+    let isGuest = Boolean(params.isGuest);
 
     return sendRequest('/k/v1/records', 'GET', param, isGuest).then((response) => {
-        allRecords = allRecords.concat(response.records)
+        allRecords = allRecords.concat(response.records);
         if (response.records.length < LIMIT) {
             return {
                 records: allRecords
-            }
+            };
         }
-        return getAllRecordsByQuery(params, allRecords, offset + LIMIT)
-    })
-}
+        return getAllRecordsByQuery(params, allRecords, offset + LIMIT);
+    });
+};
 
-export default getAllRecordsByQuery
+export default getAllRecordsByQuery;

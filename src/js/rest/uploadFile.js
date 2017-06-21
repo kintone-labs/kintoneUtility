@@ -1,6 +1,6 @@
-import createError from './common/createError'
-import errors from '!json!./resource/errorMessages.json'
-import sendRequest from './common/sendRequest'
+import createError from './common/createError';
+import errors from '!json!./resource/errorMessages.json';
+import sendRequest from './common/sendRequest';
 
 /** Function: uploadFile
  *  @param {object} params
@@ -11,16 +11,15 @@ import sendRequest from './common/sendRequest'
  *  @return {object} result
  */
 export default (params) => {
-    'use strict'
     if (!(params && params.blob && params.fileName)) {
-        return createError(errors.required.fileNameOrBlob)
+        return createError(errors.required.fileNameOrBlob);
     }
 
     let param = {
         fileName: params.fileName,
         blob: params.blob
-    }
-    let isGuest = (params.isGuest) ? true : false
+    };
+    let isGuest = Boolean(params.isGuest);
 
-    return sendRequest('/k/v1/file', 'POST', param, isGuest)
-}
+    return sendRequest('/k/v1/file', 'POST', param, isGuest);
+};

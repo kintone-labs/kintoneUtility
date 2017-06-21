@@ -1,8 +1,8 @@
-import createError from './common/createError'
-import errors from '!json!./resource/errorMessages.json'
-import makeBulkParam from './common/makeBulkParam'
-import sendRequest from './common/sendRequest'
-import limit from '!json!./resource/limit.json'
+import createError from './common/createError';
+import errors from '!json!./resource/errorMessages.json';
+import makeBulkParam from './common/makeBulkParam';
+import sendRequest from './common/sendRequest';
+import limit from '!json!./resource/limit.json';
 
 /** Function: postRecords
  *   Can't register over 2000 records.
@@ -15,24 +15,23 @@ import limit from '!json!./resource/limit.json'
  *  @return {object} result
  */
 export default (params) => {
-    'use strict'
     if (!(params && params.app)) {
-        return createError(errors.required.app)
+        return createError(errors.required.app);
     } else if (!Array.isArray(params.records)) {
-        return createError(errors.shouldBeArray.records)
+        return createError(errors.shouldBeArray.records);
     } else if (params.records && params.records.length > limit.bulk) {
-        return createError(errors.overLength.recordsLessThan2000)
+        return createError(errors.overLength.recordsLessThan2000);
     } else if (params.records && params.records.length < 1) {
-        return createError(errors.emptyArray.records)
+        return createError(errors.emptyArray.records);
     }
 
-    let isGuest = (params.isGuest) ? true : false
+    let isGuest = Boolean(params.isGuest);
     let param = makeBulkParam({
         app: params.app,
         records: params.records,
         method: 'POST',
         isGuest: isGuest
-    })
+    });
 
-    return sendRequest('/k/v1/bulkRequest', 'POST', param, isGuest)
-}
+    return sendRequest('/k/v1/bulkRequest', 'POST', param, isGuest);
+};

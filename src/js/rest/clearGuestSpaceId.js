@@ -1,5 +1,5 @@
 /** Function: clearGuestSpaceId
  */
 export default () => {
-    kintoneUtility.rest.guestSpaceId = undefined
-}
+    kintoneUtility.rest.guestSpaceId = undefined;
+};

@@ -1,0 +1,9 @@
+{
+  "name": "kintoneUtility",
+  "version": "0.2.1",
+  "main": "docs/kintoneUtility.min.js",
+  "ignore": [
+    "node_modules",
+    "components"
+  ]
+}

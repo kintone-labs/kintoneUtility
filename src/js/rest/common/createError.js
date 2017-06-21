@@ -1,4 +1,4 @@
-import {Promise} from 'es6-promise'
+import {Promise} from 'es6-promise';
 
 /** Function: createError
  *  @param {string} message
@@ -10,6 +10,6 @@ export default (message) => {
         reject({
             status: 'error',
             message: message
-        })
-    })
-}
+        });
+    });
+};
