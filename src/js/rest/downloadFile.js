@@ -1,5 +1,5 @@
 import createError from './common/createError';
-import errors from '!json!./resource/errorMessages.json';
+import errors from './resource/errorMessages.json';
 import sendRequest from './common/sendRequest';
 
 /** Function: downloadFile

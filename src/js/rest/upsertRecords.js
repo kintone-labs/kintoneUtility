@@ -1,9 +1,9 @@
 import createError from './common/createError';
-import errors from '!json!./resource/errorMessages.json';
+import errors from './resource/errorMessages.json';
 import makeBulkParam from './common/makeBulkParam';
 import getAllRecordsByQuery from './getAllRecordsByQuery';
 import sendRequest from './common/sendRequest';
-import limit from '!json!./resource/limit.json';
+import limit from './resource/limit.json';
 
 /** Function: upsertRecords
  *  Can't upsert over 1500 records.

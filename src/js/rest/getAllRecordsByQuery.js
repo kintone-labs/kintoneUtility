@@ -1,7 +1,7 @@
 import createError from './common/createError';
-import errors from '!json!./resource/errorMessages.json';
+import errors from './resource/errorMessages.json';
 import sendRequest from './common/sendRequest';
-import limit from '!json!./resource/limit.json';
+import limit from './resource/limit.json';
 
 /** Function: getAllRecordsByQuery
  *  @param {object} params
