@@ -1,8 +1,8 @@
 import createError from './common/createError';
-import errors from '!json!./resource/errorMessages.json';
+import errors from './resource/errorMessages.json';
 import deleteRecords from './deleteRecords';
 import sliceArray from './common/sliceArray';
-import limit from '!json!./resource/limit.json';
+import limit from './resource/limit.json';
 
 /** Function: deleteAllRecords
  *   Can delete over 2000 records, but can't do rollback.

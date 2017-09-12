@@ -1,6 +1,6 @@
 /*eslint no-underscore-dangle: 0*/
 import {Promise} from 'es6-promise';
-import errors from '!json!../resource/errorMessages.json';
+import errors from '../resource/errorMessages.json';
 
 /** Function: useXMLHttp
  *  @param {string} api

@@ -1,4 +1,4 @@
-import limit from '!json!../resource/limit.json';
+import limit from '../resource/limit.json';
 
 /** Function: sliceArray
  *  @param {array} arr

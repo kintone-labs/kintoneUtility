@@ -1,8 +1,8 @@
 import createError from './common/createError';
-import errors from '!json!./resource/errorMessages.json';
+import errors from './resource/errorMessages.json';
 import makeBulkParam from './common/makeBulkParam';
 import sendRequest from './common/sendRequest';
-import limit from '!json!./resource/limit.json';
+import limit from './resource/limit.json';
 
 /** Function: deleteRecords
  *   Can't delete over 2000 records.

@@ -1,4 +1,4 @@
-import errors from '!json!./resource/errorMessages.json';
+import errors from './resource/errorMessages.json';
 
 /** Function: setApiTokenAuth
  *  @param {string} apiToken
