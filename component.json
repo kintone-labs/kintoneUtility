@@ -1,6 +1,6 @@
 {
   "name": "kintoneUtility",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "docs/kintoneUtility.min.js",
   "ignore": [
     "node_modules",

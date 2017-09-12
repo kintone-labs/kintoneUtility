@@ -1,6 +1,6 @@
 {
   "name": "kintone-utility",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "The library that helps your kintone customization.",
   "scripts": {
     "build": "webpack",
