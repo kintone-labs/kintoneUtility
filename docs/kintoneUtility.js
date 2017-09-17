@@ -3840,6 +3840,10 @@ var _uploadFile = __webpack_require__(41);
 
 var _uploadFile2 = _interopRequireDefault(_uploadFile);
 
+var _getForm = __webpack_require__(42);
+
+var _getForm2 = _interopRequireDefault(_getForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var kintoneUtility = {
@@ -3862,6 +3866,7 @@ kintoneUtility.rest.upsertRecord = _upsertRecord2.default;
 kintoneUtility.rest.upsertRecords = _upsertRecords2.default;
 kintoneUtility.rest.downloadFile = _downloadFile2.default;
 kintoneUtility.rest.uploadFile = _uploadFile2.default;
+kintoneUtility.rest.getForm = _getForm2.default;
 
 kintoneUtility.rest.setBasicAuth = _setBasicAuth2.default;
 kintoneUtility.rest.setUserAuth = _setUserAuth2.default;
@@ -5202,6 +5207,51 @@ exports.default = function (params) {
     var isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/file', 'POST', param, isGuest);
+};
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: getForm
+ *  @param {object} params
+ *  @param {number} params.app
+ *  @param {boolean} params.isGuest
+ *
+ *  @return {object} result
+ */
+exports.default = function (params) {
+    if (!(params && params.app)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.app);
+    }
+
+    var param = {
+        app: params.app
+    };
+    var isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)('/k/v1/form', 'GET', param, isGuest);
 };
 
 /***/ })
