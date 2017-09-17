@@ -24,6 +24,7 @@ import clearDomain from './rest/clearDomain';
 import clearGuestSpaceId from './rest/clearGuestSpaceId';
 import downloadFile from './rest/downloadFile';
 import uploadFile from './rest/uploadFile';
+import getForm from './rest/getForm';
 
 let kintoneUtility = {
     rest: {},
@@ -45,6 +46,7 @@ kintoneUtility.rest.upsertRecord = upsertRecord;
 kintoneUtility.rest.upsertRecords = upsertRecords;
 kintoneUtility.rest.downloadFile = downloadFile;
 kintoneUtility.rest.uploadFile = uploadFile;
+kintoneUtility.rest.getForm = getForm;
 
 kintoneUtility.rest.setBasicAuth = setBasicAuth;
 kintoneUtility.rest.setUserAuth = setUserAuth;
