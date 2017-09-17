@@ -15,8 +15,7 @@ export default (params) => {
     }
 
     let param = {
-        app: params.app,
-        id: params.id
+        app: params.app
     };
     let isGuest = Boolean(params.isGuest);
 

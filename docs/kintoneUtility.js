@@ -5247,8 +5247,7 @@ exports.default = function (params) {
     }
 
     var param = {
-        app: params.app,
-        id: params.id
+        app: params.app
     };
     var isGuest = Boolean(params.isGuest);
 
