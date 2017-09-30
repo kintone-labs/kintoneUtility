@@ -3840,6 +3840,14 @@ var _uploadFile = __webpack_require__(41);
 
 var _uploadFile2 = _interopRequireDefault(_uploadFile);
 
+var _getFormFields = __webpack_require__(42);
+
+var _getFormFields2 = _interopRequireDefault(_getFormFields);
+
+var _getFormLayout = __webpack_require__(43);
+
+var _getFormLayout2 = _interopRequireDefault(_getFormLayout);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var kintoneUtility = {
@@ -3862,6 +3870,8 @@ kintoneUtility.rest.upsertRecord = _upsertRecord2.default;
 kintoneUtility.rest.upsertRecords = _upsertRecords2.default;
 kintoneUtility.rest.downloadFile = _downloadFile2.default;
 kintoneUtility.rest.uploadFile = _uploadFile2.default;
+kintoneUtility.rest.getFormFields = _getFormFields2.default;
+kintoneUtility.rest.getFormLayout = _getFormLayout2.default;
 
 kintoneUtility.rest.setBasicAuth = _setBasicAuth2.default;
 kintoneUtility.rest.setUserAuth = _setUserAuth2.default;
@@ -5202,6 +5212,104 @@ exports.default = function (params) {
     var isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/file', 'POST', param, isGuest);
+};
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: getForm
+ *  @param {object} params
+ *  @param {number} params.app
+ *  @param {string} params.lang
+ *  @param {boolean} params.isGuest
+ *
+ *  @return {object} result
+ */
+exports.default = function (params) {
+    if (!(params && params.app)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.app);
+    }
+
+    var isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
+    var api = isPreview ? '/k/v1/preview/app/form/fields' : '/k/v1/app/form/fields';
+    var param = {
+        app: params.app
+    };
+    if (params.hasOwnProperty('lang')) {
+        param.lang = params.lang;
+    }
+    var isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)(api, 'GET', param, isGuest);
+};
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: getForm
+ *  @param {object} params
+ *  @param {number} params.app
+ *  @param {boolean} params.isGuest
+ *
+ *  @return {object} result
+ */
+exports.default = function (params) {
+    if (!(params && params.app)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.app);
+    }
+
+    var isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
+    var api = isPreview ? '/k/v1/preview/app/form/layout' : '/k/v1/app/form/layout';
+    var param = {
+        app: params.app
+    };
+    var isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)(api, 'GET', param, isGuest);
 };
 
 /***/ })
