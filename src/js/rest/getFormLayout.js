@@ -2,10 +2,11 @@ import createError from './common/createError';
 import errors from './resource/errorMessages.json';
 import sendRequest from './common/sendRequest';
 
-/** Function: getForm
+/** Function: getFormLayout
  *  @param {object} params
  *  @param {number} params.app
  *  @param {boolean} params.isGuest
+ *  @param {boolean} params.isPreview
  *
  *  @return {object} result
  */

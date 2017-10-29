@@ -5239,11 +5239,12 @@ var _sendRequest2 = _interopRequireDefault(_sendRequest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/** Function: getForm
+/** Function: getFormFields
  *  @param {object} params
  *  @param {number} params.app
  *  @param {string} params.lang
  *  @param {boolean} params.isGuest
+ *  @param {boolean} params.isPreview
  *
  *  @return {object} result
  */
@@ -5290,10 +5291,11 @@ var _sendRequest2 = _interopRequireDefault(_sendRequest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/** Function: getForm
+/** Function: getFormLayout
  *  @param {object} params
  *  @param {number} params.app
  *  @param {boolean} params.isGuest
+ *  @param {boolean} params.isPreview
  *
  *  @return {object} result
  */
