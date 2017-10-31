@@ -18,6 +18,10 @@
 * [kintoneUtility.rest.downloadFile](#downloadFile)
 * [kintoneUtility.rest.uploadFile](#uploadFile)
 
+## App
+* [kintoneUtility.rest.getFormFields](#getFormFields)
+* [kintoneUtility.rest.getFormLayout](#getFormLayout)
+
 ## Authentication
 * [kintoneUtility.rest.setUserAuth](#setUserAuth)
 * [kintoneUtility.rest.setApiTokenAuth](#setApiTokenAuth)
@@ -40,7 +44,7 @@
 | param | Object | Yes |  |
 | param.app | Number | Yes | The app ID.
 | param.id | Number | Yes | The Record ID.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space. 
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space. 
 
 #### Response
 ```
@@ -69,10 +73,10 @@ kintoneUtility.rest.getRecord({
 |:-----------|:------------:|:------------:|:------------
 | param | Object | Yes |  |
 | param.app | Number | Yes | The App ID.
-| param.query | String | No | The query string that will specify what records will be responded. If nothing is specified, fields will be returned from all accessible records.<br>[The query detail](https://developer.kintone.io/hc/en-us/articles/213149287/)
-| param.fields | Array | No | The field codes that you want in the response. If nothing is specified, all accessible fields in the app will be returned.
-| param.totalCount | Boolean | No | If set to "true", the request will retrieve the total count of records that were retrieved that match the query conditions. If ignored, null is returned for the totalCount value.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space. 
+| param.query | String | Optional | The query string that will specify what records will be responded. If nothing is specified, fields will be returned from all accessible records.<br>[The query detail](https://developer.kintone.io/hc/en-us/articles/213149287/)
+| param.fields | Array | Optional | The field codes that you want in the response. If nothing is specified, all accessible fields in the app will be returned.
+| param.totalCount | Boolean | Optional | If set to "true", the request will retrieve the total count of records that were retrieved that match the query conditions. If ignored, null is returned for the totalCount value.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space. 
 
 #### Response
 ```
@@ -103,9 +107,9 @@ kintoneUtility.rest.getRecords({
 |:-----------|:------------:|:------------:|:------------
 | param | Object | Yes |  |
 | param.app | Number | Yes | The App ID.
-| param.query | String | No | The query string that will specify what records will be responded. If nothing is specified, fields will be returned from all accessible records.<br>[The query detail](https://developer.kintone.io/hc/en-us/articles/213149287/)<br>Can't indicate **limit** and **offset**.
-| param.fields | Array | No | The field codes that you want in the response. If nothing is specified, all accessible fields in the app will be returned.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space. 
+| param.query | String | Optional | The query string that will specify what records will be responded. If nothing is specified, fields will be returned from all accessible records.<br>[The query detail](https://developer.kintone.io/hc/en-us/articles/213149287/)<br>Can't indicate **limit** and **offset**.
+| param.fields | Array | Optional | The field codes that you want in the response. If nothing is specified, all accessible fields in the app will be returned.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space. 
 
 #### Response
 ```
@@ -134,8 +138,8 @@ kintoneUtility.rest.getAllRecordsByQuery({
 |:-----------|:------------:|:------------:|:------------
 | param | Object | Yes |  |
 | param.app | Number | Yes | The app ID.
-| param.record | Object | No | Field codes and values are specified in this object. If ignored, the record will be added with default field values. If field codes that don't exist are specified, these will be ignored.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space. 
+| param.record | Object | Optional | Field codes and values are specified in this object. If ignored, the record will be added with default field values. If field codes that don't exist are specified, these will be ignored.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space. 
 
 #### Response
 ```
@@ -174,7 +178,7 @@ kintoneUtility.rest.postRecord({
 | param | Object | Yes |  |
 | param.app | Number | Yes | The app ID.
 | param.records | Array | Yes | Holds an array of record objects.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space. 
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space. 
 
 #### Response
 ```
@@ -221,7 +225,7 @@ kintoneUtility.rest.postRecords({
 | param | Object | Yes |  |
 | param.app | Number | Yes | The app ID.
 | param.records | Array | Yes | Holds an array of record objects.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space. 
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space. 
 
 #### Response
 ```
@@ -271,9 +275,9 @@ kintoneUtility.rest.postAllRecords({
 | param.updateKey | Object | No (Required, if id will not be specified) | To specify this field, the field must have the "Prohibit duplicate values" option turned on.
 | param.updateKey.field | String | No (Required, if updateKey will be specified) | The field code of unique key.
 | param.updateKey.value | String | No (Required, if updateKey will be specified)| The value of unique key.
-| param.revision | Number | No | The expected revision number. If the value does not match, an error will occur and the record will not be updated. If the value is not specified or is -1, the revision number will not be checked.
-| param.record | Object | No | Field codes and values are specified in this object. If ignored, the record will not be updated.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
+| param.revision | Number | Optional | The expected revision number. If the value does not match, an error will occur and the record will not be updated. If the value is not specified or is -1, the revision number will not be checked.
+| param.record | Object | Optional | Field codes and values are specified in this object. If ignored, the record will not be updated.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space.
 
 #### Response
 ```
@@ -328,7 +332,7 @@ kintoneUtility.rest.putRecord({
 | param | Object | Yes |  |
 | param.app | Number | Yes | The app ID.
 | param.records | Array | Yes | [Array of record objects that include id/updateKey, revision and record objects.](https://developer.kintone.io/hc/en-us/articles/213149027/)
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space.
 
 #### Response
 ```
@@ -377,7 +381,7 @@ kintoneUtility.rest.putRecords({
 | param | Object | Yes |  |
 | param.app | Number | Yes | kintone app ID.
 | param.records | Array | Yes | [Array of record objects that include id/updateKey, revision and record objects.](https://developer.kintone.io/hc/en-us/articles/213149027/)
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space. 
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space. 
 
 #### Response
 ```
@@ -434,8 +438,8 @@ kintoneUtility.rest.putAllRecords({
 | param | Object | Yes |  |
 | param.app | Number | Yes | The app ID.
 | param.ids | Array | Yes | Array of record IDs that will be deleted.
-| param.revisions | Array | No | The expected revision number. The first id number will correspond to the first revision number in the array, the second id to the second revision number, and so on.<br>If the revision number does not match, an error will occur and no records will be deleted.<br>If the revision number is left blank or is -1, the revision number will not be checked for the corresponding record ID.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
+| param.revisions | Array | Optional | The expected revision number. The first id number will correspond to the first revision number in the array, the second id to the second revision number, and so on.<br>If the revision number does not match, an error will occur and no records will be deleted.<br>If the revision number is left blank or is -1, the revision number will not be checked for the corresponding record ID.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space.
 
 #### Response
 ```
@@ -469,7 +473,7 @@ kintoneUtility.rest.deleteRecords({
 | param | Object | Yes |  |
 | param.app | Number | Yes | kintone app ID.
 | param.ids | Array | Yes | Array of record IDs that will be deleted.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space. 
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space. 
 
 #### Response
 ```
@@ -501,8 +505,8 @@ kintoneUtility.rest.deleteAllRecords({
 |:-----------|:------------:|:------------:|:------------
 | param | Object | Yes |  |
 | param.app | Number | Yes | The App ID.
-| param.query | String | No | The query string that will specify what records will be responded. If nothing is specified, fields will be returned from all accessible records.<br>[The query detail](https://developer.kintone.io/hc/en-us/articles/213149287/)<br>Can't indicate **limit** and **offset**.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space. 
+| param.query | String | Optional | The query string that will specify what records will be responded. If nothing is specified, fields will be returned from all accessible records.<br>[The query detail](https://developer.kintone.io/hc/en-us/articles/213149287/)<br>Can't indicate **limit** and **offset**.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space. 
 
 #### Response
 ```
@@ -535,9 +539,9 @@ kintoneUtility.rest.deleteAllRecordsByQuery({
 | param.updateKey | Object | Yes | To specify this field, the field must have the "Prohibit duplicate values" option turned on.
 | param.updateKey.field | String | Yes | The field code of unique key.
 | param.updateKey.value | String | Yes | The value of unique key.
-| param.revision | Number | No | The expected revision number. If the value does not match, an error will occur and the record will not be updated. If the value is not specified or is -1, the revision number will not be checked.
-| param.record | Object | No | Field codes and values are specified in this object. If ignored, the record will not be updated.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
+| param.revision | Number | Optional | The expected revision number. If the value does not match, an error will occur and the record will not be updated. If the value is not specified or is -1, the revision number will not be checked.
+| param.record | Object | Optional | Field codes and values are specified in this object. If ignored, the record will not be updated.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space.
 
 #### Response
 ```
@@ -576,7 +580,7 @@ kintoneUtility.rest.upsertRecord({
 | param | Object | Yes |  |
 | param.app | Number | Yes | The app ID.
 | param.records | Array | Yes | Holds an array of objects that include updateKey, revision and record objects.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space.
 
 #### Response
 ```
@@ -629,7 +633,7 @@ kintoneUtility.rest.upsertRecords({
 |:-----------|:------------:|:------------:|:------------
 | param | Object | Yes |  |
 | param.fileKey | String | Yes | The file key that you want to download.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space.
 
 #### Response
 ```
@@ -658,7 +662,7 @@ kintoneUtility.rest.downloadFile({
 | param | Object | Yes |  |
 | param.fileName | String | Yes | The file name you will upload.
 | param.blob | Object | Yes | The blob format data.
-| param.isGuest | Boolean | No | The default is false, to be true if the app is belonged to a guest space.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space.
 
 #### Response
 ```
@@ -672,6 +676,66 @@ kintoneUtility.rest.uploadFile({
   isGuest: false
 }).then(function(response) {
   console.log(response); //fileKey
+}).catch(function(error) {
+  console.log(error);
+});
+```
+
+## <a name="getFormFields"> kintoneUtility.rest.getFormFields(param)
+* Get the list of fields and field settings of an App.
+
+#### Parameter 
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| param | Object | Yes |  |
+| param.app | Number | Yes | The app ID.
+| param.lang | String | Optional | The localized language to retrieve the data in:<br><br>default: retrieves the default names<br>en: retrieves the localized English names<br>zh: retrieves the localized Chinese names<br>ja: retrieves the localized Japanese names<br>user: retrieves the localized names, in the same language as the language setting* set on the user used for the authentication.<br><br>If ignored, the default names will be retrieved.<br><br>*If the user language setting is set to "Use Web browser settings", the settings set in the Accept-Language header will be used. If there is no Accept-Language header, the language set in the "Localization" settings in the System Administrator's menu will be used.
+| param.isPreview | Boolean | Optional | The default is false, to be true if you want to get pre-live setting.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space.
+
+#### Response
+```
+Promise Object
+```
+#### Sample
+```js
+kintoneUtility.rest.getFormFields({
+  app: 542,
+  lang: 'default',
+  isPreview: false,
+  isGuest: false
+}).then(function(response) {
+  console.log(response);
+}).catch(function(error) {
+  console.log(error);
+});
+```
+
+## <a name="getFormLayout"> kintoneUtility.rest.getFormLayout(param)
+* Get the field layout info of a form in an App.
+
+#### Parameter 
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| param | Object | Yes |  |
+| param.app | Number | Yes | The app ID.
+| param.isPreview | Boolean | Optional | The default is false, to be true if you want to get pre-live setting.
+| param.isGuest | Boolean | Optional | The default is false, to be true if the app is belonged to a guest space.
+
+#### Response
+```
+Promise Object
+```
+#### Sample
+```js
+kintoneUtility.rest.getFormLayout({
+  app: 542,
+  isPreview: false,
+  isGuest: false
+}).then(function(response) {
+  console.log(response);
 }).catch(function(error) {
   console.log(error);
 });
