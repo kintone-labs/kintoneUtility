@@ -21,8 +21,8 @@
 ## App
 * [kintoneUtility.rest.getFormFields](#getFormFields)
 * [kintoneUtility.rest.getFormLayout](#getFormLayout)
-* [kintoneUtility.rest.postDeploy](#postDeploy)
-* [kintoneUtility.rest.getDeploy](#getDeploy)
+* [kintoneUtility.rest.postDeployAppSettings](#postDeployAppSettings)
+* [kintoneUtility.rest.getDeployStatus](#getDeployStatus)
 * [kintoneUtility.rest.getCustomize](#getCustomize)
 * [kintoneUtility.rest.putCustomize](#putCustomize)
 
@@ -745,7 +745,7 @@ kintoneUtility.rest.getFormLayout({
 });
 ```
 
-## <a name="postDeploy"> kintoneUtility.rest.postDeploy(param)
+## <a name="postDeployAppSettings"> kintoneUtility.rest.postDeployAppSettings(param)
 * Deploy the apps to the production environments.
 
 #### Parameter
@@ -766,7 +766,7 @@ Promise Object
 ```
 #### Sample
 ```js
-kintoneUtility.rest.postDeploy({
+kintoneUtility.rest.postDeployAppSettings({
   apps: [
     { app: 542 },
   ],
@@ -777,7 +777,7 @@ kintoneUtility.rest.postDeploy({
 });
 ```
 
-## <a name="getDeploy"> kintoneUtility.rest.getDeploy(param)
+## <a name="getDeployStatus"> kintoneUtility.rest.getDeployStatus(param)
 * Get the status of the deployments of the apps.
 
 #### Parameter
@@ -794,7 +794,7 @@ Promise Object
 ```
 #### Sample
 ```js
-kintoneUtility.rest.getDeploy({
+kintoneUtility.rest.getDeployStatus({
   apps: [ 542 ],
 }).then(function(response) {
   console.log(response);
