@@ -28,8 +28,8 @@ import getFormFields from './rest/getFormFields';
 import getFormLayout from './rest/getFormLayout';
 import postDeployAppSettings from './rest/postDeployAppSettings';
 import getDeployStatus from './rest/getDeployStatus';
-import getCustomize from './rest/getCustomize';
-import putCustomize from './rest/putCustomize';
+import getCustomization from './rest/getCustomization';
+import updateCustomization from './rest/updateCustomization';
 
 let kintoneUtility = {
     rest: {
@@ -53,8 +53,8 @@ let kintoneUtility = {
         getFormLayout,
         postDeployAppSettings,
         getDeployStatus,
-        getCustomize,
-        putCustomize,
+        getCustomization,
+        updateCustomization,
 
         setBasicAuth,
         setUserAuth,

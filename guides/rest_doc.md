@@ -23,8 +23,8 @@
 * [kintoneUtility.rest.getFormLayout](#getFormLayout)
 * [kintoneUtility.rest.postDeployAppSettings](#postDeployAppSettings)
 * [kintoneUtility.rest.getDeployStatus](#getDeployStatus)
-* [kintoneUtility.rest.getCustomize](#getCustomize)
-* [kintoneUtility.rest.putCustomize](#putCustomize)
+* [kintoneUtility.rest.getCustomization](#getCustomization)
+* [kintoneUtility.rest.updateCustomization](#updateCustomization)
 
 ## Authentication
 * [kintoneUtility.rest.setUserAuth](#setUserAuth)
@@ -803,7 +803,7 @@ kintoneUtility.rest.getDeployStatus({
 });
 ```
 
-## <a name="getCustomize"> kintoneUtility.rest.getCustomize(param)
+## <a name="getCustomization"> kintoneUtility.rest.getCustomization(param)
 * Get the information of JavaScrit/CSS files used to customize an app.
 
 #### Parameter
@@ -821,7 +821,7 @@ Promise Object
 ```
 #### Sample
 ```js
-kintoneUtility.rest.getCustomize({
+kintoneUtility.rest.getCustomization({
   app: 542,
 }).then(function(response) {
   console.log(response);
@@ -830,7 +830,7 @@ kintoneUtility.rest.getCustomize({
 });
 ```
 
-## <a name="putCustomize"> kintoneUtility.rest.putCustomize(param)
+## <a name="updateCustomization"> kintoneUtility.rest.updateCustomization(param)
 * Update the information of JavaScrit/CSS files used to customize an app.
 
 #### Parameter
@@ -866,7 +866,7 @@ Promise Object
 ```
 #### Sample
 ```js
-kintoneUtility.rest.putCustomize({
+kintoneUtility.rest.updateCustomization({
   app: 542,
   desktop: {
     js: [

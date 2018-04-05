@@ -2,7 +2,7 @@ import createError from './common/createError';
 import errors from './resource/errorMessages.json';
 import sendRequest from './common/sendRequest';
 
-/** Function: putCustomize
+/** Function: updateCustomization
  *  @param {object} params
  *  @param {number} params.app
  *  @param {string?} params.scope
