@@ -27,7 +27,7 @@ import uploadFile from './rest/uploadFile';
 import getFormFields from './rest/getFormFields';
 import getFormLayout from './rest/getFormLayout';
 import postDeployAppSettings from './rest/postDeployAppSettings';
-import getDeployStatus from './rest/getDeployStatus';
+import getAppDeployStatus from './rest/getAppDeployStatus';
 import getCustomization from './rest/getCustomization';
 import updateCustomization from './rest/updateCustomization';
 
@@ -52,7 +52,7 @@ let kintoneUtility = {
         getFormFields,
         getFormLayout,
         postDeployAppSettings,
-        getDeployStatus,
+        getAppDeployStatus,
         getCustomization,
         updateCustomization,
 

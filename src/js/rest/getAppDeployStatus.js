@@ -2,7 +2,7 @@ import createError from './common/createError';
 import errors from './resource/errorMessages.json';
 import sendRequest from './common/sendRequest';
 
-/** Function: getDeployStatus
+/** Function: getAppDeployStatus
  *  @param {object} params
  *  @param {object[]} params.apps
  *  @param {number} params.apps[].app

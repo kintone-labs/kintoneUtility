@@ -777,7 +777,7 @@ kintoneUtility.rest.postDeployAppSettings({
 });
 ```
 
-## <a name="getDeployStatus"> kintoneUtility.rest.getDeployStatus(param)
+## <a name="getAppDeployStatus"> kintoneUtility.rest.getAppDeployStatus(param)
 * Get the status of the deployments of the apps.
 
 #### Parameter
@@ -794,7 +794,7 @@ Promise Object
 ```
 #### Sample
 ```js
-kintoneUtility.rest.getDeployStatus({
+kintoneUtility.rest.getAppDeployStatus({
   apps: [ 542 ],
 }).then(function(response) {
   console.log(response);
