@@ -755,7 +755,7 @@ kintoneUtility.rest.getFormLayout({
 | param | Object | Yes |  |
 | param.apps | Object | Yes | The array of the app information.
 | param.apps[].app | Number | Yes | The app ID.
-| param.revision | Number | Optional | The expected revision number. If the value does not match, an error will occur and the record will not be updated. If the value is not specified or is -1, the revision number will not be checked.
+| param.apps[].revision | Number | Optional | The expected revision number. If the value does not match, an error will occur and the record will not be updated. If the value is not specified or is -1, the revision number will not be checked.
 | param.revert | Boolean | Optional | **Default:** `false`. Set `true` if you want to revert the deploy when some error occur during it.
 | param.isPreview | Boolean | Optional | **Default:** `false`. Set `true` if you want to get pre-live setting.
 | param.isGuest | Boolean | Optional | **Default:** `false`. Set `true` if the app belongs to a guest space.

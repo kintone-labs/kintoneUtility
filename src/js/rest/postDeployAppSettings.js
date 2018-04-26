@@ -6,7 +6,7 @@ import sendRequest from './common/sendRequest';
  *  @param {object} params
  *  @param {object[]} params.apps
  *  @param {number} params.apps[].app
- *  @param {number?} params.revision
+ *  @param {number?} params.apps[].revision
  *  @param {boolean?} params.revert
  *  @param {boolean?} params.isGuest
  *
@@ -20,9 +20,6 @@ export default (params) => {
     let param = {
         apps: params.apps
     };
-    if (params.hasOwnProperty('revision')) {
-        param.revision = Number(params.revision);
-    }
     if (params.hasOwnProperty('revert')) {
         param.revert = Boolean(params.revert);
     }
