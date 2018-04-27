@@ -22,7 +22,7 @@
 * [kintoneUtility.rest.getFormFields](#getFormFields)
 * [kintoneUtility.rest.getFormLayout](#getFormLayout)
 * [kintoneUtility.rest.postDeployAppSettings](#postDeployAppSettings)
-* [kintoneUtility.rest.getDeployStatus](#getDeployStatus)
+* [kintoneUtility.rest.getAppDeployStatus](#getAppDeployStatus)
 * [kintoneUtility.rest.getCustomization](#getCustomization)
 * [kintoneUtility.rest.updateCustomization](#updateCustomization)
 
@@ -804,7 +804,7 @@ kintoneUtility.rest.getAppDeployStatus({
 ```
 
 ## <a name="getCustomization"> kintoneUtility.rest.getCustomization(param)
-* Get the information of JavaScrit/CSS files used to customize an app.
+* Gets the JavaScript and CSS Customization settings of an App.
 
 #### Parameter
 
@@ -831,7 +831,7 @@ kintoneUtility.rest.getCustomization({
 ```
 
 ## <a name="updateCustomization"> kintoneUtility.rest.updateCustomization(param)
-* Update the information of JavaScrit/CSS files used to customize an app.
+* Updates the JavaScript and CSS Customization settings of an App.
 
 #### Parameter
 
