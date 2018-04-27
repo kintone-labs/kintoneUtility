@@ -3870,21 +3870,21 @@ var _getFormLayout = __webpack_require__(42);
 
 var _getFormLayout2 = _interopRequireDefault(_getFormLayout);
 
-var _postDeploy = __webpack_require__(43);
+var _postDeployAppSettings = __webpack_require__(43);
 
-var _postDeploy2 = _interopRequireDefault(_postDeploy);
+var _postDeployAppSettings2 = _interopRequireDefault(_postDeployAppSettings);
 
-var _getDeploy = __webpack_require__(44);
+var _getAppDeployStatus = __webpack_require__(44);
 
-var _getDeploy2 = _interopRequireDefault(_getDeploy);
+var _getAppDeployStatus2 = _interopRequireDefault(_getAppDeployStatus);
 
-var _getCustomize = __webpack_require__(45);
+var _getCustomization = __webpack_require__(45);
 
-var _getCustomize2 = _interopRequireDefault(_getCustomize);
+var _getCustomization2 = _interopRequireDefault(_getCustomization);
 
-var _putCustomize = __webpack_require__(46);
+var _updateCustomization = __webpack_require__(46);
 
-var _putCustomize2 = _interopRequireDefault(_putCustomize);
+var _updateCustomization2 = _interopRequireDefault(_updateCustomization);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3908,10 +3908,10 @@ var kintoneUtility = {
         uploadFile: _uploadFile2.default,
         getFormFields: _getFormFields2.default,
         getFormLayout: _getFormLayout2.default,
-        postDeploy: _postDeploy2.default,
-        getDeploy: _getDeploy2.default,
-        getCustomize: _getCustomize2.default,
-        putCustomize: _putCustomize2.default,
+        postDeployAppSettings: _postDeployAppSettings2.default,
+        getAppDeployStatus: _getAppDeployStatus2.default,
+        getCustomization: _getCustomization2.default,
+        updateCustomization: _updateCustomization2.default,
 
         setBasicAuth: _setBasicAuth2.default,
         setUserAuth: _setUserAuth2.default,
@@ -5378,11 +5378,11 @@ var _sendRequest2 = _interopRequireDefault(_sendRequest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/** Function: postDeploy
+/** Function: postDeployAppSettings
  *  @param {object} params
  *  @param {object[]} params.apps
  *  @param {number} params.apps[].app
- *  @param {number?} params.revision
+ *  @param {number?} params.apps[].revision
  *  @param {boolean?} params.revert
  *  @param {boolean?} params.isGuest
  *
@@ -5396,9 +5396,6 @@ exports.default = function (params) {
     var param = {
         apps: params.apps
     };
-    if (params.hasOwnProperty('revision')) {
-        param.revision = Number(params.revision);
-    }
     if (params.hasOwnProperty('revert')) {
         param.revert = Boolean(params.revert);
     }
@@ -5432,7 +5429,7 @@ var _sendRequest2 = _interopRequireDefault(_sendRequest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/** Function: postDeploy
+/** Function: getAppDeployStatus
  *  @param {object} params
  *  @param {object[]} params.apps
  *  @param {number} params.apps[].app
@@ -5478,7 +5475,7 @@ var _sendRequest2 = _interopRequireDefault(_sendRequest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/** Function: getCustomize
+/** Function: getCustomization
  *  @param {object} params
  *  @param {number} params.app
  *  @param {boolean} params.isGuest
@@ -5526,7 +5523,7 @@ var _sendRequest2 = _interopRequireDefault(_sendRequest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/** Function: putCustomize
+/** Function: updateCustomization
  *  @param {object} params
  *  @param {number} params.app
  *  @param {string?} params.scope
