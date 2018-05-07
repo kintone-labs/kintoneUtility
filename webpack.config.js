@@ -4,12 +4,12 @@ const webpack = require('webpack');
 module.exports = (env = {}) => {
     return {
         entry: {
-            "kintoneUtility": './src/js/main.js',
-            "kintoneUtility.min": './src/js/main.js'
+            'kintoneUtility': './src/js/main.js',
+            'kintoneUtility.min': './src/js/main.js'
         },
         output: {
             path: path.resolve(__dirname, 'docs'),
-            filename: '[name].js',
+            filename: '[name].js'
         },
         module: {
             rules: [{
@@ -18,9 +18,9 @@ module.exports = (env = {}) => {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: 'es2015'
+                        presets: 'env'
                     }
-                },
+                }
             }]
         },
         watch: env.watch,
@@ -30,5 +30,5 @@ module.exports = (env = {}) => {
                 minimize: true
             })
         ]
-    }
-}
+    };
+};
