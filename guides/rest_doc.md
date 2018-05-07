@@ -21,6 +21,10 @@
 ## App
 * [kintoneUtility.rest.getFormFields](#getFormFields)
 * [kintoneUtility.rest.getFormLayout](#getFormLayout)
+* [kintoneUtility.rest.postDeployAppSettings](#postDeployAppSettings)
+* [kintoneUtility.rest.getAppDeployStatus](#getAppDeployStatus)
+* [kintoneUtility.rest.getCustomization](#getCustomization)
+* [kintoneUtility.rest.updateCustomization](#updateCustomization)
 
 ## Authentication
 * [kintoneUtility.rest.setUserAuth](#setUserAuth)
@@ -734,6 +738,150 @@ kintoneUtility.rest.getFormLayout({
   app: 542,
   isPreview: false,
   isGuest: false
+}).then(function(response) {
+  console.log(response);
+}).catch(function(error) {
+  console.log(error);
+});
+```
+
+## <a name="postDeployAppSettings"> kintoneUtility.rest.postDeployAppSettings(param)
+* Deploy the apps to the production environments.
+
+#### Parameter
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| param | Object | Yes |  |
+| param.apps | Object | Yes | The array of the app information.
+| param.apps[].app | Number | Yes | The app ID.
+| param.apps[].revision | Number | Optional | The expected revision number. If the value does not match, an error will occur and the record will not be updated. If the value is not specified or is -1, the revision number will not be checked.
+| param.revert | Boolean | Optional | **Default:** `false`. Set `true` if you want to revert the deploy when some error occur during it.
+| param.isPreview | Boolean | Optional | **Default:** `false`. Set `true` if you want to get pre-live setting.
+| param.isGuest | Boolean | Optional | **Default:** `false`. Set `true` if the app belongs to a guest space.
+
+#### Response
+```
+Promise Object
+```
+#### Sample
+```js
+kintoneUtility.rest.postDeployAppSettings({
+  apps: [
+    { app: 542 },
+  ],
+}).then(function(response) {
+  console.log(response);
+}).catch(function(error) {
+  console.log(error);
+});
+```
+
+## <a name="getAppDeployStatus"> kintoneUtility.rest.getAppDeployStatus(param)
+* Get the status of the deployments of the apps.
+
+#### Parameter
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| param | Object | Yes |  |
+| param.apps | Number[] | Yes | The array of the ids of the apps.
+| param.isGuest | Boolean | Optional | **Default:** `false`. Set `true` if the app belongs to a guest space.
+
+#### Response
+```
+Promise Object
+```
+#### Sample
+```js
+kintoneUtility.rest.getAppDeployStatus({
+  apps: [ 542 ],
+}).then(function(response) {
+  console.log(response);
+}).catch(function(error) {
+  console.log(error);
+});
+```
+
+## <a name="getCustomization"> kintoneUtility.rest.getCustomization(param)
+* Gets the JavaScript and CSS Customization settings of an App.
+
+#### Parameter
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| param | Object | Yes |  |
+| param.app | Number | Yes | The app ID.
+| param.isPreview | Boolean | Optional |  **Default:** `false`. Set `true` if you want to get pre-live setting.
+| param.isGuest | Boolean | Optional | **Default:** `false`. Set `true` if the app belongs to a guest space.
+
+#### Response
+```
+Promise Object
+```
+#### Sample
+```js
+kintoneUtility.rest.getCustomization({
+  app: 542,
+}).then(function(response) {
+  console.log(response);
+}).catch(function(error) {
+  console.log(error);
+});
+```
+
+## <a name="updateCustomization"> kintoneUtility.rest.updateCustomization(param)
+* Updates the JavaScript and CSS Customization settings of an App.
+
+#### Parameter
+
+| Name | Data type | Required | Description
+|:-----------|:------------:|:------------:|:------------
+| param | Object | Yes |  |
+| param.app | Number | Yes | The app ID.
+| param.scope | String | Optional | The target to apply this setting: `ALL`, `ADMIN`, or `NONE`.
+| param.desktop | Object | Optional | Customize files for the desktop app.
+| param.desktop.js | Object[] | Optional | JavaScript files information.
+| param.desktop.js[].type | String | Yes | The type of the file: `URL` or `FILE`.
+| param.desktop.js[].url | String | Optional | The URL of the file. Required when `URL` is specified as the type.
+| param.desktop.js[].file | Object | Optional | The information of the uploaded file.  Required when `FILE` is specified as the type.
+| param.desktop.js[].file.fileKey | String | Yes | The file key of the uploaded file.
+| param.desktop.css | Object[] | Optional | CSS files information.
+| param.desktop.css[].type | String | Yes | The type of the file: `URL` or `FILE`.
+| param.desktop.css[].url | String | Optional | The URL of the file. Required when `URL` is specified as the type.
+| param.desktop.css[].file | Object | Optional | The information of the uploaded file.  Required when `FILE` is specified as the type.
+| param.desktop.css[].file.fileKey | String | Yes | The file key of the uploaded file.
+| param.mobile | Object | Optional | Customize files for the mobile app.
+| param.mobile.js | Object[] | Optional |
+| param.mobile.js[].type | String | Yes | The type of the file: `URL` or `FILE`.
+| param.mobile.js[].url | String | Optional | The URL of the file. Required when `URL` is specified as the type.
+| param.mobile.js[].file | Object | Optional | The information of the uploaded file.  Required when `FILE` is specified as the type.
+| param.mobile.js[].file.fileKey | String | Yes | The file key of the uploaded file.
+| param.revision | Number | Optional | The expected revision number. If the value does not match, an error will occur and the record will not be updated. If the value is not specified or is -1, the revision number will not be checked.
+| param.isGuest | Boolean | Optional | **Default:** `false`. Set `true` if the app belongs to a guest space.
+ 
+#### Response
+```
+Promise Object
+```
+#### Sample
+```js
+kintoneUtility.rest.updateCustomization({
+  app: 542,
+  desktop: {
+    js: [
+      {
+        type: 'URL',
+        url: 'https://kintone.github.io/kintoneUtility/kintoneUtility.min.js',
+      },
+    ],
+    css: [
+      {
+        type: 'FILE',
+        file: { fileKey: 'xxxxxxxxxxxxxxxx' },
+      }
+    ],
+  },
 }).then(function(response) {
   console.log(response);
 }).catch(function(error) {

@@ -67,7 +67,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = {"required":{"app":"\"params\" needs \"app\".","id":"\"params\" needs \"id\".","idOrUpdateKey":"\"params\" needs \"id\" or \"updateKey\".","updateKey":"\"params\" needs \"updateKey\", \"updateKey.field\" and \"updateKey.value\".","fileKey":"\"params\" needs \"fileKey\".","fileNameOrBlob":"\"params\" needs \"fileName\" and \"blob\"."},"shouldBeArray":{"records":"\"records\" should be Array.","ids":"\"ids\" should be Array."},"overLength":{"recordsLessThan2000":"\"records\" should be less than or equal to 2,000.","recordsLessThan1500":"\"records\" should be less than or equal to 1,500.","ids":"\"ids.length\" should be less than or equal to 2,000."},"emptyArray":{"records":"\"records\" is empty. \"records\" needs to contain one record at least.","ids":"\"ids\" is empty. \"ids\" needs to contain one id at least."},"notUniqueField":"\"params.updateKey\" is not unique field.","emptyLoginNameOrPass":"\"loginName\" or \"password\" is empty. Usage: kintoneUtility.rest.setUserAuth('loginName', 'password')","emptyUserNameOrPass":"\"userName\" or \"password\" is empty. Usage: kintoneUtility.rest.setBasicAuth('userName', 'password')","emptyApiToken":"\"apiToken\" is empty. Usage: kintoneUtility.rest.setApiTokenAuth('apiToken')","emptyDomain":"\"domain\" is empty. Usage: kintoneUtility.rest.setDomain('xxxx.cybozu.com')","emptyGuestSpaceId":"\"guestSpaceId\" is empty. Usage: kintoneUtility.rest.setGuestSpaceId('guestSpaceId')","useSetDomain":"Can't make a request url. Please use kintoneUtility.rest.setDomain."}
+module.exports = {"required":{"app":"\"params\" needs \"app\".","apps":"\"params\" needs \"apps\".","id":"\"params\" needs \"id\".","idOrUpdateKey":"\"params\" needs \"id\" or \"updateKey\".","updateKey":"\"params\" needs \"updateKey\", \"updateKey.field\" and \"updateKey.value\".","fileKey":"\"params\" needs \"fileKey\".","fileNameOrBlob":"\"params\" needs \"fileName\" and \"blob\"."},"shouldBeArray":{"records":"\"records\" should be Array.","ids":"\"ids\" should be Array."},"overLength":{"recordsLessThan2000":"\"records\" should be less than or equal to 2,000.","recordsLessThan1500":"\"records\" should be less than or equal to 1,500.","ids":"\"ids.length\" should be less than or equal to 2,000."},"emptyArray":{"records":"\"records\" is empty. \"records\" needs to contain one record at least.","ids":"\"ids\" is empty. \"ids\" needs to contain one id at least."},"notUniqueField":"\"params.updateKey\" is not unique field.","emptyLoginNameOrPass":"\"loginName\" or \"password\" is empty. Usage: kintoneUtility.rest.setUserAuth('loginName', 'password')","emptyUserNameOrPass":"\"userName\" or \"password\" is empty. Usage: kintoneUtility.rest.setBasicAuth('userName', 'password')","emptyApiToken":"\"apiToken\" is empty. Usage: kintoneUtility.rest.setApiTokenAuth('apiToken')","emptyDomain":"\"domain\" is empty. Usage: kintoneUtility.rest.setDomain('xxxx.cybozu.com')","emptyGuestSpaceId":"\"guestSpaceId\" is empty. Usage: kintoneUtility.rest.setGuestSpaceId('guestSpaceId')","useSetDomain":"Can't make a request url. Please use kintoneUtility.rest.setDomain."}
 
 /***/ }),
 /* 1 */
@@ -792,7 +792,6 @@ function makePromise(promise) {
 function validationError() {
   return new Error('Array Methods must be provided an Array');
 }
-
 var Enumerator = function () {
   function Enumerator(Constructor, input) {
     this._instanceConstructor = Constructor;
@@ -1174,7 +1173,6 @@ function needsNew() {
   Useful for tooling.
   @constructor
 */
-
 var Promise$1 = function () {
   function Promise(resolver) {
     this[PROMISE_ID] = nextId();
@@ -3870,41 +3868,62 @@ var _getFormLayout = __webpack_require__(42);
 
 var _getFormLayout2 = _interopRequireDefault(_getFormLayout);
 
+var _postDeployAppSettings = __webpack_require__(43);
+
+var _postDeployAppSettings2 = _interopRequireDefault(_postDeployAppSettings);
+
+var _getAppDeployStatus = __webpack_require__(44);
+
+var _getAppDeployStatus2 = _interopRequireDefault(_getAppDeployStatus);
+
+var _getCustomization = __webpack_require__(45);
+
+var _getCustomization2 = _interopRequireDefault(_getCustomization);
+
+var _updateCustomization = __webpack_require__(46);
+
+var _updateCustomization2 = _interopRequireDefault(_updateCustomization);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var kintoneUtility = {
-    rest: {},
+    rest: {
+        getRecord: _getRecord2.default,
+        getRecords: _getRecords2.default,
+        getAllRecordsByQuery: _getAllRecordsByQuery2.default,
+        postRecord: _postRecord2.default,
+        postRecords: _postRecords2.default,
+        postAllRecords: _postAllRecords2.default,
+        putRecord: _putRecord2.default,
+        putRecords: _putRecords2.default,
+        putAllRecords: _putAllRecords2.default,
+        deleteRecords: _deleteRecords2.default,
+        deleteAllRecords: _deleteAllRecords2.default,
+        deleteAllRecordsByQuery: _deleteAllRecordsByQuery2.default,
+        upsertRecord: _upsertRecord2.default,
+        upsertRecords: _upsertRecords2.default,
+        downloadFile: _downloadFile2.default,
+        uploadFile: _uploadFile2.default,
+        getFormFields: _getFormFields2.default,
+        getFormLayout: _getFormLayout2.default,
+        postDeployAppSettings: _postDeployAppSettings2.default,
+        getAppDeployStatus: _getAppDeployStatus2.default,
+        getCustomization: _getCustomization2.default,
+        updateCustomization: _updateCustomization2.default,
+
+        setBasicAuth: _setBasicAuth2.default,
+        setUserAuth: _setUserAuth2.default,
+        setApiTokenAuth: _setApiTokenAuth2.default,
+        setDomain: _setDomain2.default,
+        setGuestSpaceId: _setGuestSpaceId2.default,
+        clearBasicAuth: _clearBasicAuth2.default,
+        clearUserAuth: _clearUserAuth2.default,
+        clearApiTokenAuth: _clearApiTokenAuth2.default,
+        clearDomain: _clearDomain2.default,
+        clearGuestSpaceId: _clearGuestSpaceId2.default
+    },
     ui: {}
 };
-kintoneUtility.rest.getRecord = _getRecord2.default;
-kintoneUtility.rest.getRecords = _getRecords2.default;
-kintoneUtility.rest.getAllRecordsByQuery = _getAllRecordsByQuery2.default;
-kintoneUtility.rest.postRecord = _postRecord2.default;
-kintoneUtility.rest.postRecords = _postRecords2.default;
-kintoneUtility.rest.postAllRecords = _postAllRecords2.default;
-kintoneUtility.rest.putRecord = _putRecord2.default;
-kintoneUtility.rest.putRecords = _putRecords2.default;
-kintoneUtility.rest.putAllRecords = _putAllRecords2.default;
-kintoneUtility.rest.deleteRecords = _deleteRecords2.default;
-kintoneUtility.rest.deleteAllRecords = _deleteAllRecords2.default;
-kintoneUtility.rest.deleteAllRecordsByQuery = _deleteAllRecordsByQuery2.default;
-kintoneUtility.rest.upsertRecord = _upsertRecord2.default;
-kintoneUtility.rest.upsertRecords = _upsertRecords2.default;
-kintoneUtility.rest.downloadFile = _downloadFile2.default;
-kintoneUtility.rest.uploadFile = _uploadFile2.default;
-kintoneUtility.rest.getFormFields = _getFormFields2.default;
-kintoneUtility.rest.getFormLayout = _getFormLayout2.default;
-
-kintoneUtility.rest.setBasicAuth = _setBasicAuth2.default;
-kintoneUtility.rest.setUserAuth = _setUserAuth2.default;
-kintoneUtility.rest.setApiTokenAuth = _setApiTokenAuth2.default;
-kintoneUtility.rest.setDomain = _setDomain2.default;
-kintoneUtility.rest.setGuestSpaceId = _setGuestSpaceId2.default;
-kintoneUtility.rest.clearBasicAuth = _clearBasicAuth2.default;
-kintoneUtility.rest.clearUserAuth = _clearUserAuth2.default;
-kintoneUtility.rest.clearApiTokenAuth = _clearApiTokenAuth2.default;
-kintoneUtility.rest.clearDomain = _clearDomain2.default;
-kintoneUtility.rest.clearGuestSpaceId = _clearGuestSpaceId2.default;
 
 window.kintoneUtility = kintoneUtility;
 
@@ -5330,6 +5349,227 @@ exports.default = function (params) {
     var isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)(api, 'GET', param, isGuest);
+};
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: postDeployAppSettings
+ *  @param {object} params
+ *  @param {object[]} params.apps
+ *  @param {number} params.apps[].app
+ *  @param {number?} params.apps[].revision
+ *  @param {boolean?} params.revert
+ *  @param {boolean?} params.isGuest
+ *
+ *  @return {object} result
+ */
+exports.default = function (params) {
+    if (!(params && params.apps)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.apps);
+    }
+
+    var param = {
+        apps: params.apps
+    };
+    if (params.hasOwnProperty('revert')) {
+        param.revert = Boolean(params.revert);
+    }
+    var isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)('/k/v1/preview/app/deploy', 'POST', param, isGuest);
+};
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: getAppDeployStatus
+ *  @param {object} params
+ *  @param {object[]} params.apps
+ *  @param {number} params.apps[].app
+ *  @param {boolean?} params.isGuest
+ *
+ *  @return {object} result
+ */
+exports.default = function (params) {
+    if (!(params && params.apps)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.apps);
+    }
+
+    var param = {
+        apps: params.apps
+    };
+    var isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)('/k/v1/preview/app/deploy', 'GET', param, isGuest);
+};
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: getCustomization
+ *  @param {object} params
+ *  @param {number} params.app
+ *  @param {boolean} params.isGuest
+ *  @param {boolean} params.isPreview
+ *
+ *  @return {object} result
+ */
+exports.default = function (params) {
+    if (!(params && params.app)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.app);
+    }
+
+    var isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
+    var url = isPreview ? '/k/v1/preview/app/customize' : '/k/v1/app/customize';
+    var param = {
+        app: params.app
+    };
+    var isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)(url, 'GET', param, isGuest);
+};
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: updateCustomization
+ *  @param {object} params
+ *  @param {number} params.app
+ *  @param {string?} params.scope
+ *  @param {object?} params.desktop
+ *  @param {object[]?} params.desktop.js
+ *  @param {string} params.desktop.js[].type
+ *  @param {string?} params.desktop.js[].url
+ *  @param {object?} params.desktop.js[].file
+ *  @param {string} params.desktop.js[].file.fileKey
+ *  @param {object[]?} params.desktop.css
+ *  @param {string} params.desktop.css[].type
+ *  @param {string?} params.desktop.css[].url
+ *  @param {object?} params.desktop.css[].file
+ *  @param {string} params.desktop.css[].file.fileKey
+ *  @param {object[]?} params.mobile.js
+ *  @param {string} params.mobile.js[].type
+ *  @param {string?} params.mobile.js[].url
+ *  @param {object?} params.mobile.js[].file
+ *  @param {string} params.mobile.js[].file.fileKey
+ *  @param {number?} params.revision
+ *  @param {boolean?} params.isGuest
+ *
+ *  @return {object} result
+ */
+exports.default = function (params) {
+    if (!(params && params.app)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.app);
+    }
+
+    var param = {
+        app: params.app
+    };
+    if (params.hasOwnProperty('scope')) {
+        param.scope = params.scope;
+    }
+    if (params.hasOwnProperty('desktop')) {
+        param.desktop = params.desktop;
+    }
+    if (params.hasOwnProperty('mobile')) {
+        param.mobile = params.mobile;
+    }
+    if (params.hasOwnProperty('revision')) {
+        param.revision = Number(params.revision);
+    }
+
+    var isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)('/k/v1/preview/app/customize', 'PUT', param, isGuest);
 };
 
 /***/ })

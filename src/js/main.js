@@ -26,39 +26,48 @@ import downloadFile from './rest/downloadFile';
 import uploadFile from './rest/uploadFile';
 import getFormFields from './rest/getFormFields';
 import getFormLayout from './rest/getFormLayout';
+import postDeployAppSettings from './rest/postDeployAppSettings';
+import getAppDeployStatus from './rest/getAppDeployStatus';
+import getCustomization from './rest/getCustomization';
+import updateCustomization from './rest/updateCustomization';
 
 let kintoneUtility = {
-    rest: {},
+    rest: {
+        getRecord,
+        getRecords,
+        getAllRecordsByQuery,
+        postRecord,
+        postRecords,
+        postAllRecords,
+        putRecord,
+        putRecords,
+        putAllRecords,
+        deleteRecords,
+        deleteAllRecords,
+        deleteAllRecordsByQuery,
+        upsertRecord,
+        upsertRecords,
+        downloadFile,
+        uploadFile,
+        getFormFields,
+        getFormLayout,
+        postDeployAppSettings,
+        getAppDeployStatus,
+        getCustomization,
+        updateCustomization,
+
+        setBasicAuth,
+        setUserAuth,
+        setApiTokenAuth,
+        setDomain,
+        setGuestSpaceId,
+        clearBasicAuth,
+        clearUserAuth,
+        clearApiTokenAuth,
+        clearDomain,
+        clearGuestSpaceId
+    },
     ui: {}
 };
-kintoneUtility.rest.getRecord = getRecord;
-kintoneUtility.rest.getRecords = getRecords;
-kintoneUtility.rest.getAllRecordsByQuery = getAllRecordsByQuery;
-kintoneUtility.rest.postRecord = postRecord;
-kintoneUtility.rest.postRecords = postRecords;
-kintoneUtility.rest.postAllRecords = postAllRecords;
-kintoneUtility.rest.putRecord = putRecord;
-kintoneUtility.rest.putRecords = putRecords;
-kintoneUtility.rest.putAllRecords = putAllRecords;
-kintoneUtility.rest.deleteRecords = deleteRecords;
-kintoneUtility.rest.deleteAllRecords = deleteAllRecords;
-kintoneUtility.rest.deleteAllRecordsByQuery = deleteAllRecordsByQuery;
-kintoneUtility.rest.upsertRecord = upsertRecord;
-kintoneUtility.rest.upsertRecords = upsertRecords;
-kintoneUtility.rest.downloadFile = downloadFile;
-kintoneUtility.rest.uploadFile = uploadFile;
-kintoneUtility.rest.getFormFields = getFormFields;
-kintoneUtility.rest.getFormLayout = getFormLayout;
-
-kintoneUtility.rest.setBasicAuth = setBasicAuth;
-kintoneUtility.rest.setUserAuth = setUserAuth;
-kintoneUtility.rest.setApiTokenAuth = setApiTokenAuth;
-kintoneUtility.rest.setDomain = setDomain;
-kintoneUtility.rest.setGuestSpaceId = setGuestSpaceId;
-kintoneUtility.rest.clearBasicAuth = clearBasicAuth;
-kintoneUtility.rest.clearUserAuth = clearUserAuth;
-kintoneUtility.rest.clearApiTokenAuth = clearApiTokenAuth;
-kintoneUtility.rest.clearDomain = clearDomain;
-kintoneUtility.rest.clearGuestSpaceId = clearGuestSpaceId;
 
 window.kintoneUtility = kintoneUtility;

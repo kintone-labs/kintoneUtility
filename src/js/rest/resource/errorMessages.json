@@ -1,6 +1,7 @@
 {
     "required": {
         "app": "\"params\" needs \"app\".",
+        "apps": "\"params\" needs \"apps\".",
         "id": "\"params\" needs \"id\".",
         "idOrUpdateKey": "\"params\" needs \"id\" or \"updateKey\".",
         "updateKey": "\"params\" needs \"updateKey\", \"updateKey.field\" and \"updateKey.value\".",
