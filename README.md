@@ -2,7 +2,7 @@
 This is a library in order to simplify the kintone customization.
 
 ## Version
-0.3.0
+0.4.0
 
 ## Usage
 1. Download kintoneUtility.min.js and kintoneUtility.min.css (Future) from [releases](https://github.com/kintone/kintoneUtility/releases).
