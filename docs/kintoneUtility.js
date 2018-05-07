@@ -792,7 +792,6 @@ function makePromise(promise) {
 function validationError() {
   return new Error('Array Methods must be provided an Array');
 }
-
 var Enumerator = function () {
   function Enumerator(Constructor, input) {
     this._instanceConstructor = Constructor;
@@ -1174,7 +1173,6 @@ function needsNew() {
   Useful for tooling.
   @constructor
 */
-
 var Promise$1 = function () {
   function Promise(resolver) {
     this[PROMISE_ID] = nextId();
