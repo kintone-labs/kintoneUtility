@@ -347,20 +347,24 @@ Promise Object
 var records = [
   {
     id: 18616,
-    Number: {
-      value: 1234
-    },
-    String: {
-      value: 'string1'
+    record: {
+      Number: {
+        value: 1234
+      },
+      String: {
+        value: 'string1'
+      },
     },
   },
   {
     id: 18617,
-    Number: {
-      value: 5678
-    },
-    String: {
-      value: 'string2'
+    record: {
+      Number: {
+        value: 5678
+      },
+      String: {
+        value: 'string2'
+      },
     },
   }
 ];
@@ -399,11 +403,13 @@ var records = [
       field: 'unique_field_code',
       value: 'unique_field_value1'
     },
-    Number: {
-      value: 1234
-    },
-    String: {
-      value: 'string1'
+    record: {
+      Number: {
+        value: 1234
+      },
+      String: {
+        value: 'string1'
+      },
     },
   },
   {
@@ -411,11 +417,13 @@ var records = [
       field: 'unique_field_code',
       value: 'unique_field_value2'
     },
-    Number: {
-      value: 5678
-    },
-    String: {
-      value: 'string2'
+    record: {
+      Number: {
+        value: 5678
+      },
+      String: {
+        value: 'string2'
+      },
     },
   }
 ];
