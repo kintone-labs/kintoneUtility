@@ -80,7 +80,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _es6Promise = __webpack_require__(7);
+var _es6Promise = __webpack_require__(8);
 
 /** Function: createError
  *  @param {string} message
@@ -214,6 +214,33 @@ exports.default = function (params) {
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -279,7 +306,7 @@ var getAllRecordsByQuery = function getAllRecordsByQuery(params, records, offset
 exports.default = getAllRecordsByQuery;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -307,7 +334,7 @@ exports.default = function (arr, begin) {
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -1490,34 +1517,7 @@ return Promise$1;
 
 //# sourceMappingURL=es6-promise.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19), __webpack_require__(8)))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19), __webpack_require__(5)))
 
 /***/ }),
 /* 9 */
@@ -1900,7 +1900,7 @@ var _deleteRecords = __webpack_require__(14);
 
 var _deleteRecords2 = _interopRequireDefault(_deleteRecords);
 
-var _sliceArray = __webpack_require__(6);
+var _sliceArray = __webpack_require__(7);
 
 var _sliceArray2 = _interopRequireDefault(_sliceArray);
 
@@ -3749,14 +3749,18 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
 var _getRecord = __webpack_require__(18);
 
@@ -3766,7 +3770,7 @@ var _getRecords = __webpack_require__(9);
 
 var _getRecords2 = _interopRequireDefault(_getRecords);
 
-var _getAllRecordsByQuery = __webpack_require__(5);
+var _getAllRecordsByQuery = __webpack_require__(6);
 
 var _getAllRecordsByQuery2 = _interopRequireDefault(_getAllRecordsByQuery);
 
@@ -3927,7 +3931,9 @@ var kintoneUtility = {
     ui: {}
 };
 
-window.kintoneUtility = kintoneUtility;
+global.kintoneUtility = kintoneUtility;
+exports.default = kintoneUtility;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
 /* 18 */
@@ -4179,7 +4185,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _es6Promise = __webpack_require__(7);
+var _es6Promise = __webpack_require__(8);
 
 var _errorMessages = __webpack_require__(0);
 
@@ -4347,7 +4353,7 @@ var _postRecords = __webpack_require__(11);
 
 var _postRecords2 = _interopRequireDefault(_postRecords);
 
-var _sliceArray = __webpack_require__(6);
+var _sliceArray = __webpack_require__(7);
 
 var _sliceArray2 = _interopRequireDefault(_sliceArray);
 
@@ -4424,7 +4430,7 @@ var _putRecords = __webpack_require__(13);
 
 var _putRecords2 = _interopRequireDefault(_putRecords);
 
-var _sliceArray = __webpack_require__(6);
+var _sliceArray = __webpack_require__(7);
 
 var _sliceArray2 = _interopRequireDefault(_sliceArray);
 
@@ -4489,7 +4495,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _getAllRecordsByQuery = __webpack_require__(5);
+var _getAllRecordsByQuery = __webpack_require__(6);
 
 var _getAllRecordsByQuery2 = _interopRequireDefault(_getAllRecordsByQuery);
 
@@ -4621,7 +4627,7 @@ var _makeBulkParam = __webpack_require__(4);
 
 var _makeBulkParam2 = _interopRequireDefault(_makeBulkParam);
 
-var _getAllRecordsByQuery = __webpack_require__(5);
+var _getAllRecordsByQuery = __webpack_require__(6);
 
 var _getAllRecordsByQuery2 = _interopRequireDefault(_getAllRecordsByQuery);
 

@@ -70,4 +70,5 @@ let kintoneUtility = {
     ui: {}
 };
 
-window.kintoneUtility = kintoneUtility;
+global.kintoneUtility = kintoneUtility;
+export default kintoneUtility;
