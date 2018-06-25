@@ -581,7 +581,8 @@ kintoneUtility.rest.upsertRecord({
 ```
 
 ## <a name="upsertRecords"> kintoneUtility.rest.upsertRecords(param)
-* Insert or update records to kintone app.
+* Insert or update under 1500 records to kintone app.
+* If the records are over 1500, It is thrown Error.
 * Insert the records if the updateKey doesn't exists.
 * Update the records if the updateKey exists.
 
