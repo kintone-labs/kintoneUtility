@@ -69,7 +69,7 @@ kintoneUtility.rest.getRecord({
 
 ## <a name="getRecords"> kintoneUtility.rest.getRecords(param)
 * Get multiple records.
-* Limited under 500 records. 
+* The maximum number of records that can be retrieved is 500.
 
 #### Parameter 
 
@@ -171,7 +171,7 @@ kintoneUtility.rest.postRecord({
 ```
 
 ## <a name="postRecords"> kintoneUtility.rest.postRecords(param)
-* **Insert under 2000 records to kintone app.**
+* **Insert up to 2000 records to kintone app.**
 * **If the records are over 2000, It is thrown Error.**
 * **If request is failed, no record is inserted.**
 
@@ -325,7 +325,7 @@ kintoneUtility.rest.putRecord({
 ```
 
 ## <a name="putRecords"> kintoneUtility.rest.putRecords(param)
-* **Update under 2000 records to kintone app.**
+* **Update up to 2000 records to kintone app.**
 * **If the records are over 2000, It is thrown Error.**
 * **If request is failed, no record is Updated.**
 
@@ -581,7 +581,7 @@ kintoneUtility.rest.upsertRecord({
 ```
 
 ## <a name="upsertRecords"> kintoneUtility.rest.upsertRecords(param)
-* Insert or update under 1500 records to kintone app.
+* insert or update up to 1500 records to kintone app.
 * If the records are over 1500, It is thrown Error.
 * Insert the records if the updateKey doesn't exists.
 * Update the records if the updateKey exists.
