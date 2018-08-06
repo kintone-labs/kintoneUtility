@@ -3758,6 +3758,10 @@ function isnan (val) {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _getRecord = __webpack_require__(18);
 
 var _getRecord2 = _interopRequireDefault(_getRecord);
@@ -3928,6 +3932,7 @@ var kintoneUtility = {
 };
 
 window.kintoneUtility = kintoneUtility;
+exports.default = kintoneUtility;
 
 /***/ }),
 /* 18 */

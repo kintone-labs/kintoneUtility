@@ -71,3 +71,4 @@ let kintoneUtility = {
 };
 
 window.kintoneUtility = kintoneUtility;
+export default kintoneUtility;

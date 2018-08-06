@@ -2,6 +2,7 @@
   "name": "kintone-utility",
   "version": "0.4.0",
   "description": "The library that helps your kintone customization.",
+  "main": "src/js/main.js",
   "scripts": {
     "build": "webpack",
     "watch": "webpack --env.watch",
