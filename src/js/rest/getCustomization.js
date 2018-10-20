@@ -5,8 +5,8 @@ import sendRequest from './common/sendRequest';
 /** Function: getCustomization
  *  @param {object} params
  *  @param {number} params.app
- *  @param {boolean} params.isGuest
- *  @param {boolean} params.isPreview
+ *  @param {boolean} [params.isPreview]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

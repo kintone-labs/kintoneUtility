@@ -5,13 +5,13 @@ import sendRequest from './common/sendRequest';
 /** Function: putRecord
  *  @param {object} params
  *  @param {number} params.app
- *  @param {number} params.id
- *  @param {object} params.updateKey
+ *  @param {number} [params.id]
+ *  @param {object} [params.updateKey]
  *  @param {string} params.updateKey.field
  *  @param {string} params.updateKey.value
- *  @param {number} params.revision
- *  @param {object} params.record
- *  @param {boolean} params.isGuest
+ *  @param {number} [params.revision]
+ *  @param {object} [params.record]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

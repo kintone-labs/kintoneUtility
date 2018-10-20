@@ -5,8 +5,8 @@ import deleteAllRecords from './deleteAllRecords';
  *   Can delete over 2000 records, but can't do rollback.
  *  @param {object} params
  *  @param {number} params.app
- *  @param {string} params.query
- *  @param {boolean} params.isGuest
+ *  @param {string} [params.query]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

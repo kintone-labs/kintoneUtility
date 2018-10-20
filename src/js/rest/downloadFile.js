@@ -5,7 +5,7 @@ import sendRequest from './common/sendRequest';
 /** Function: downloadFile
  *  @param {object} params
  *  @param {string} params.fileKey
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

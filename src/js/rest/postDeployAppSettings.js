@@ -6,9 +6,9 @@ import sendRequest from './common/sendRequest';
  *  @param {object} params
  *  @param {object[]} params.apps
  *  @param {number} params.apps[].app
- *  @param {number?} params.apps[].revision
- *  @param {boolean?} params.revert
- *  @param {boolean?} params.isGuest
+ *  @param {number} [params.apps[].revision]
+ *  @param {boolean} [params.revert]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

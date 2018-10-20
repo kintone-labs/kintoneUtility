@@ -5,9 +5,9 @@ import sendRequest from './common/sendRequest';
 /** Function: getFormFields
  *  @param {object} params
  *  @param {number} params.app
- *  @param {string} params.lang
- *  @param {boolean} params.isGuest
- *  @param {boolean} params.isPreview
+ *  @param {string} [params.lang]
+ *  @param {boolean} [params.isGuest]
+ *  @param {boolean} [params.isPreview]
  *
  *  @return {object} result
  */
