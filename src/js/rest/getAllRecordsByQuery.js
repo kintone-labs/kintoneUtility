@@ -6,9 +6,9 @@ import limit from './resource/limit.json';
 /** Function: getAllRecordsByQuery
  *  @param {object} params
  *  @param {number} params.app
- *  @param {string} params.query
- *  @param {array} params.fields
- *  @param {boolean} params.isGuest
+ *  @param {string} [params.query]
+ *  @param {array} [params.fields]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

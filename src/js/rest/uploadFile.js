@@ -6,7 +6,7 @@ import sendRequest from './common/sendRequest';
  *  @param {object} params
  *  @param {string} params.fileName
  *  @param {object} params.blob
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

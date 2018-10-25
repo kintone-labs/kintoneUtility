@@ -11,7 +11,7 @@ import putRecord from './putRecord';
  *  @param {string} params.updateKey.field
  *  @param {string} params.updateKey.value
  *  @param {object} params.record
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

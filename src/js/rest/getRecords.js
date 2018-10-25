@@ -5,10 +5,10 @@ import sendRequest from './common/sendRequest';
 /** Function: getRecords
  *  @param {object} params
  *  @param {number} params.app
- *  @param {string} params.query
- *  @param {array} params.fields
- *  @param {boolean} params.totalCount
- *  @param {boolean} params.isGuest
+ *  @param {string} [params.query]
+ *  @param {array} [params.fields]
+ *  @param {boolean} [params.totalCount]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

@@ -6,7 +6,7 @@ import sendRequest from './common/sendRequest';
  *  @param {object} params
  *  @param {object[]} params.apps
  *  @param {number} params.apps[].app
- *  @param {boolean?} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

@@ -244,9 +244,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: getAllRecordsByQuery
  *  @param {object} params
  *  @param {number} params.app
- *  @param {string} params.query
- *  @param {array} params.fields
- *  @param {boolean} params.isGuest
+ *  @param {string} [params.query]
+ *  @param {array} [params.fields]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -1547,10 +1547,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: getRecords
  *  @param {object} params
  *  @param {number} params.app
- *  @param {string} params.query
- *  @param {array} params.fields
- *  @param {boolean} params.totalCount
- *  @param {boolean} params.isGuest
+ *  @param {string} [params.query]
+ *  @param {array} [params.fields]
+ *  @param {boolean} [params.totalCount]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -1598,8 +1598,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: postRecord
  *  @param {object} params
  *  @param {number} params.app
- *  @param {object} params.record
- *  @param {boolean} params.isGuest
+ *  @param {object} [params.record]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -1656,7 +1656,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {number} params.app
  *  @param {array} params.records
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -1710,13 +1710,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: putRecord
  *  @param {object} params
  *  @param {number} params.app
- *  @param {number} params.id
- *  @param {object} params.updateKey
+ *  @param {number} [params.id]
+ *  @param {object} [params.updateKey]
  *  @param {string} params.updateKey.field
  *  @param {string} params.updateKey.value
- *  @param {number} params.revision
- *  @param {object} params.record
- *  @param {boolean} params.isGuest
+ *  @param {number} [params.revision]
+ *  @param {object} [params.record]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -1784,7 +1784,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {number} params.app
  *  @param {array} params.records
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -1849,8 +1849,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {number} params.app
  *  @param {array} params.ids
- *  @param {array} params.revisions
- *  @param {boolean} params.isGuest
+ *  @param {array} [params.revisions]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -1915,7 +1915,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {number} params.app
  *  @param {array} params.ids
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -3963,7 +3963,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {number} params.app
  *  @param {number} params.id
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -4367,7 +4367,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {number} params.app
  *  @param {array} params.records
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -4444,7 +4444,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {number} params.app
  *  @param {array} params.records
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -4508,8 +4508,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *   Can delete over 2000 records, but can't do rollback.
  *  @param {object} params
  *  @param {number} params.app
- *  @param {string} params.query
- *  @param {boolean} params.isGuest
+ *  @param {string} [params.query]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -4575,7 +4575,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {string} params.updateKey.field
  *  @param {string} params.updateKey.value
  *  @param {object} params.record
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -4646,7 +4646,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {number} params.app
  *  @param {array} params.records
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -5229,7 +5229,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: downloadFile
  *  @param {object} params
  *  @param {string} params.fileKey
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -5275,7 +5275,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {string} params.fileName
  *  @param {object} params.blob
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -5321,9 +5321,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: getFormFields
  *  @param {object} params
  *  @param {number} params.app
- *  @param {string} params.lang
- *  @param {boolean} params.isGuest
- *  @param {boolean} params.isPreview
+ *  @param {string} [params.lang]
+ *  @param {boolean} [params.isGuest]
+ *  @param {boolean} [params.isPreview]
  *
  *  @return {object} result
  */
@@ -5373,8 +5373,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: getFormLayout
  *  @param {object} params
  *  @param {number} params.app
- *  @param {boolean} params.isGuest
- *  @param {boolean} params.isPreview
+ *  @param {boolean} [params.isGuest]
+ *  @param {boolean} [params.isPreview]
  *
  *  @return {object} result
  */
@@ -5422,9 +5422,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {object[]} params.apps
  *  @param {number} params.apps[].app
- *  @param {number?} params.apps[].revision
- *  @param {boolean?} params.revert
- *  @param {boolean?} params.isGuest
+ *  @param {number} [params.apps[].revision]
+ *  @param {boolean} [params.revert]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -5473,7 +5473,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {object} params
  *  @param {object[]} params.apps
  *  @param {number} params.apps[].app
- *  @param {boolean?} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -5518,8 +5518,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: getCustomization
  *  @param {object} params
  *  @param {number} params.app
- *  @param {boolean} params.isGuest
- *  @param {boolean} params.isPreview
+ *  @param {boolean} [params.isPreview]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
@@ -5566,25 +5566,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: updateCustomization
  *  @param {object} params
  *  @param {number} params.app
- *  @param {string?} params.scope
- *  @param {object?} params.desktop
- *  @param {object[]?} params.desktop.js
+ *  @param {string} [params.scope]
+ *  @param {object} [params.desktop]
+ *  @param {object[]} [params.desktop.js]
  *  @param {string} params.desktop.js[].type
- *  @param {string?} params.desktop.js[].url
- *  @param {object?} params.desktop.js[].file
+ *  @param {string} [params.desktop.js[].url]
+ *  @param {object} [params.desktop.js[].file]
  *  @param {string} params.desktop.js[].file.fileKey
- *  @param {object[]?} params.desktop.css
+ *  @param {object[]} [params.desktop.css]
  *  @param {string} params.desktop.css[].type
- *  @param {string?} params.desktop.css[].url
- *  @param {object?} params.desktop.css[].file
+ *  @param {string} [params.desktop.css[].url]
+ *  @param {object} [params.desktop.css[].file]
  *  @param {string} params.desktop.css[].file.fileKey
- *  @param {object[]?} params.mobile.js
+ *  @param {object[]} [params.mobile.js]
  *  @param {string} params.mobile.js[].type
- *  @param {string?} params.mobile.js[].url
- *  @param {object?} params.mobile.js[].file
+ *  @param {string} [params.mobile.js[].url]
+ *  @param {object} [params.mobile.js[].file]
  *  @param {string} params.mobile.js[].file.fileKey
- *  @param {number?} params.revision
- *  @param {boolean?} params.isGuest
+ *  @param {number} [params.revision]
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */

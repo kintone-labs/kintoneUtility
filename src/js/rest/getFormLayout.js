@@ -5,8 +5,8 @@ import sendRequest from './common/sendRequest';
 /** Function: getFormLayout
  *  @param {object} params
  *  @param {number} params.app
- *  @param {boolean} params.isGuest
- *  @param {boolean} params.isPreview
+ *  @param {boolean} [params.isGuest]
+ *  @param {boolean} [params.isPreview]
  *
  *  @return {object} result
  */

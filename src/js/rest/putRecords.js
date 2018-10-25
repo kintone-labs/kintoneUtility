@@ -10,7 +10,7 @@ import limit from './resource/limit.json';
  *  @param {object} params
  *  @param {number} params.app
  *  @param {array} params.records
- *  @param {boolean} params.isGuest
+ *  @param {boolean} [params.isGuest]
  *
  *  @return {object} result
  */
