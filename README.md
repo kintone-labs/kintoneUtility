@@ -1,4 +1,7 @@
-# kintone Utility for JavaScript
+# kintone Utility for JavaScript (Deprecated)
+
+## This library has been deprecated. Please use [@kintone/kintone-js-sdk](https://www.npmjs.com/package/@kintone/kintone-js-sdk)
+
 This is a library in order to simplify the kintone customization.
 
 ## Version
