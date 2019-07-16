@@ -1,43 +1,37 @@
-# kintone Utility for JavaScript (Deprecated)
-
-## This library has been deprecated. Please use [@kintone/kintone-js-sdk](https://www.npmjs.com/package/@kintone/kintone-js-sdk)
-
-This is a library in order to simplify the kintone customization.
-
-## Version
-0.4.1
+# Kintone Utility for JavaScript
+Utility library for development on Kintone platform.
 
 ## Usage
-1. Download kintoneUtility.min.js and kintoneUtility.min.css (Future) from [releases](https://github.com/kintone/kintoneUtility/releases).
-   Or copy the following URL.
-   https://kintone.github.io/kintoneUtility/kintoneUtility.min.js
-2. Upload them to kintone following help site. ([Setting JavaScript Customization on kintone](https://help.kintone.com/en/k/user/js_customize.html))
-   Or add the copied URL.
-3. You can use kintoneUtility Object on your code!
+1. Download `kintoneUtility.min.js` from [Releases](https://github.com/kintone/kintoneUtility/releases) 
+   or copy the following URL: https://kintone.github.io/kintoneUtility/kintoneUtility.min.js
+2. Upload the file to Kintone by following directions here: [Setting JavaScript Customization on Kintone](https://help.kintone.com/en/k/user/js_customize.html)
+   or add the copied URL.
+3. You can use the `kintoneUtility` object on your code!
 
-## Document
+## Documentation
 * [kintoneUtility.rest](./guides/rest_doc.md)
-* kintoneUtility.ui (Future)
 
-## Requirement
-* Node.js (Version 6.11.3 or later)
-* Git
+## Requirements
+* Node.js (6.11.3+)
 
-## How to build
-```shell-session
-$ git clone https://github.com/kintone/kintoneUtility.git
-$ cd kintoneUtility
+## Development
+```console
 $ npm install
 $ npm run build
-$ npm run watch (Automatically build when the sources are changed)
+# OR
+$ npm run watch (incremetal tranpilation enabled)
 ```
 
-## Output
-* ./docs/kintoneUtility.min.js
-* ./docs/kintoneUtility.min.css (Future)
+This outputs `kintoneUtility.min.js` in `docs/`.
 
 ## License
 MIT
 
-## Copyright
+## Original Copyright
 Copyright(c) Cybozu, Inc.
+
+## Note
+
+This library has been deprecated by the original authors and the successor is [@kintone/kintone-js-sdk](https://www.npmjs.com/package/@kintone/kintone-js-sdk). 
+
+This fork is made for the legacy project which depends on Kintone Utility by appending new features of Kintone platform to break backward compatibilities such as Cursor API.
