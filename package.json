@@ -1,11 +1,10 @@
 {
   "name": "@shuuji3/kintone-utility",
   "version": "0.4.1",
-  "description": "The library that helps your kintone customization.",
+  "description": "Utility library for development on Kintone platform.",
   "main": "src/js/main.js",
   "scripts": {
-    "build": "webpack",
-    "watch": "webpack --env.watch",
+    "start": "webpack --env.watch",
     "lint": "eslint ./src/js",
     "fix": "eslint ./src/js --fix"
   },
