@@ -1,5 +1,5 @@
 {
-  "name": "kintone-utility",
+  "name": "@shuuji3/kintone-utility",
   "version": "0.4.1",
   "description": "The library that helps your kintone customization.",
   "main": "src/js/main.js",
