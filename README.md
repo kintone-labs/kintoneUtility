@@ -3,7 +3,7 @@ Utility library for development on Kintone platform.
 
 ## Usage
 1. Download `kintoneUtility.min.js` from [Releases](https://github.com/kintone/kintoneUtility/releases) 
-   or copy the following URL: https://kintone.github.io/kintoneUtility/kintoneUtility.min.js
+   or copy the following URL: <https://kintone.github.io/kintoneUtility/kintoneUtility.min.js>
 2. Upload the file to Kintone by following directions here: [Setting JavaScript Customization on Kintone](https://help.kintone.com/en/k/user/js_customize.html)
    or add the copied URL.
 3. You can use the `kintoneUtility` object on your code!
@@ -16,10 +16,8 @@ Utility library for development on Kintone platform.
 
 ## Development
 ```console
-$ npm install
-$ npm run build
-# OR
-$ npm run watch (incremetal tranpilation enabled)
+$ yarn install
+$ npm start
 ```
 
 This outputs `kintoneUtility.min.js` in `docs/`.
