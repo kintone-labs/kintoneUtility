@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const uglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (env = {}) => {
     return {
@@ -18,16 +19,20 @@ module.exports = (env = {}) => {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: 'env'
+                        presets: [
+                            [
+                                'env', {
+                                targets: {node: "current"}
+                            }]
+                        ],
                     }
                 }
             }]
         },
         watch: env.watch,
         plugins: [
-            new webpack.optimize.UglifyJsPlugin({
+            new uglifyjsWebpackPlugin({
                 include: /\.min\.js$/,
-                minimize: true
             })
         ]
     };
