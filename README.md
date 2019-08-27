@@ -42,8 +42,8 @@ As the library is published as npm library, you can use [unpkg](https://unpkg.co
 <https://unpkg.com/@shuuji3/kintone-utility@0.4.1/docs/kintoneUtility.min.js>
 
 ### Download File
-1. Download `kintoneUtility.min.js` from [Releases](https://github.com/shuuji3/kintoneUtility/releases) 
-   or copy the following URL: <https://shuuji3.github.io/kintoneUtility/kintoneUtility.min.js>
+1. Download `kintoneUtility.min.js` from [Releases](https://github.com/shuuji3/kintone-utility/releases) 
+   or copy the following URL: <https://shuuji3.github.io/kintone-utility/kintoneUtility.min.js>
 2. Upload the file to Kintone by following directions here: [Setting JavaScript Customization on Kintone](https://developer.kintone.io/hc/en-us/articles/213149757)
    or add the copied URL.
 3. You can use the `kintoneUtility` object on your code!
