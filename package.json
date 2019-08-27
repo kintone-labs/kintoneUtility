@@ -21,5 +21,16 @@
   },
   "dependencies": {
     "es6-promise": "^4.1.1"
+  },
+  "keywords": [
+    "kintone",
+    "cybozu"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shuuji3/kintone-utility/issues"
+  },
+  "bugs": {
+    "url": "https://github.com/shuuji3/kintone-utility/issues"
   }
 }
