@@ -1,6 +1,7 @@
 # Kintone Utility for JavaScript
 [![npm version](https://badge.fury.io/js/%40shuuji3%2Fkintone-utility.svg)](https://badge.fury.io/js/%40shuuji3%2Fkintone-utility)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/562912d851d2491d9e85e35d2a0ddb30)](https://app.codacy.com/app/shuuji3/kintone-utility?utm_source=github.com&utm_medium=referral&utm_content=shuuji3/kintone-utility&utm_campaign=Badge_Grade_Settings)
 
 Utility library for development on the Kintone platform.
 
