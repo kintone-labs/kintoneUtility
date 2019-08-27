@@ -87,8 +87,8 @@ var _es6Promise = __webpack_require__(7);
  *
  *  @return {object} promise
  */
-exports.default = function (message) {
-    return new _es6Promise.Promise(function (resolve, reject) {
+exports.default = message => {
+    return new _es6Promise.Promise((resolve, reject) => {
         reject({
             status: 'error',
             message: message
@@ -121,19 +121,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return  {object} result
  */
-exports.default = function (api, method, param, isGuest) {
-    var isUserAuth = Boolean(kintoneUtility.rest.userAuthBase64);
-    var isApiTokenAuth = Boolean(kintoneUtility.rest.apiToken);
-    var isSpecifiedGuestSpaceId = Boolean(kintoneUtility.rest.guestSpaceId);
-    var isFileApi = api.indexOf('file') > -1;
+exports.default = (api, method, param, isGuest) => {
+    const isUserAuth = Boolean(kintoneUtility.rest.userAuthBase64);
+    const isApiTokenAuth = Boolean(kintoneUtility.rest.apiToken);
+    const isSpecifiedGuestSpaceId = Boolean(kintoneUtility.rest.guestSpaceId);
+    const isFileApi = api.indexOf('file') > -1;
 
     if (window && window.kintone && !isUserAuth && !isApiTokenAuth && !isSpecifiedGuestSpaceId && !isFileApi) {
-        //use kintone.api
-        return kintone.api(kintone.api.url(api, isGuest), method, param).then(function (response) {
+        // use kintone.api
+        return kintone.api(kintone.api.url(api, isGuest), method, param).then(response => {
             return response;
         });
     } else if (window && window.XMLHttpRequest) {
-        //use xmlhttp (include file api)
+        // use xmlhttp (include file api)
         return (0, _useXMLHttp2.default)(api, method, param, isGuest);
     }
 };
@@ -172,24 +172,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} bulkParam
  */
-exports.default = function (params) {
-    var LIMIT = _limit2.default.records;
-    var bulkParam = {
+exports.default = params => {
+    const LIMIT = _limit2.default.records;
+    const bulkParam = {
         requests: []
     };
-    var length = params.records ? params.records.length : params.ids.length;
-    var loopTimes = Math.ceil(length / LIMIT);
-    var begin = 0;
-    var api = void 0;
+    const length = params.records ? params.records.length : params.ids.length;
+    const loopTimes = Math.ceil(length / LIMIT);
+    let begin = 0;
+    let api;
     if (kintoneUtility.rest.guestSpaceId) {
-        api = '/k/guest/' + kintoneUtility.rest.guestSpaceId + '/v1/records.json';
+        api = `/k/guest/${kintoneUtility.rest.guestSpaceId}/v1/records.json`;
     } else if (params.isGuest) {
         api = kintone.api.url('/k/v1/records', true).replace(location.origin, '');
     } else {
         api = '/k/v1/records.json';
     }
-    for (var i = 0; i < loopTimes; i++) {
-        var request = {
+    for (let i = 0; i < loopTimes; i++) {
+        const request = {
             method: params.method,
             api: api,
             payload: {
@@ -231,14 +231,6 @@ var _errorMessages = __webpack_require__(0);
 
 var _errorMessages2 = _interopRequireDefault(_errorMessages);
 
-var _sendRequest = __webpack_require__(2);
-
-var _sendRequest2 = _interopRequireDefault(_sendRequest);
-
-var _limit = __webpack_require__(3);
-
-var _limit2 = _interopRequireDefault(_limit);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /** Function: getAllRecordsByQuery
@@ -250,33 +242,47 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-var getAllRecordsByQuery = function getAllRecordsByQuery(params, records, offsetNum) {
+const getAllRecordsByQueryWithCursor = async params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     }
 
-    var LIMIT = _limit2.default.getRecords;
-    var allRecords = records || [];
-    var offset = offsetNum || 0;
-    var param = {
+    const cursor = await kintoneUtility.rest.postCursor({
         app: params.app,
-        query: params.query ? params.query + ' limit ' + LIMIT + ' offset ' + offset : 'limit ' + LIMIT + ' offset ' + offset,
+        size: 500,
+        query: params.query || '',
         fields: params.fields || []
-    };
-    var isGuest = Boolean(params.isGuest);
-
-    return (0, _sendRequest2.default)('/k/v1/records', 'GET', param, isGuest).then(function (response) {
-        allRecords = allRecords.concat(response.records);
-        if (response.records.length < LIMIT) {
-            return {
-                records: allRecords
-            };
-        }
-        return getAllRecordsByQuery(params, allRecords, offset + LIMIT);
     });
+
+    let allRecords;
+    try {
+        let { records, next } = await kintoneUtility.rest.getCursor({
+            id: cursor.id,
+            isGuest: params.isGuest
+        });
+        allRecords = records;
+
+        while (next) {
+            const res = await kintoneUtility.rest.getCursor({
+                id: cursor.id,
+                isGuest: params.isGuest
+            });
+            next = res.next;
+            allRecords = allRecords.concat(res.records);
+        }
+
+        return { records: allRecords };
+    } finally {
+        if (allRecords.length !== Number.parseInt(cursor.totalCount, 10)) {
+            await kintoneUtility.rest.deleteCursor({
+                id: cursor.id,
+                isGuest: params.isGuest
+            });
+        }
+    }
 };
 
-exports.default = getAllRecordsByQuery;
+exports.default = getAllRecordsByQueryWithCursor;
 
 /***/ }),
 /* 6 */
@@ -301,8 +307,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (arr, begin) {
-  var end = arr.length - begin > _limit2.default.bulk ? begin + _limit2.default.bulk : arr.length;
+exports.default = (arr, begin) => {
+  const end = arr.length - begin > _limit2.default.bulk ? begin + _limit2.default.bulk : arr.length;
   return arr.slice(begin, end);
 };
 
@@ -315,7 +321,7 @@ exports.default = function (arr, begin) {
  * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
  * @license   Licensed under MIT license
  *            See https://raw.githubusercontent.com/stefanpenner/es6-promise/master/LICENSE
- * @version   v4.2.4+314e4831
+ * @version   v4.2.8+1e68dce6
  */
 
 (function (global, factory) {
@@ -546,23 +552,12 @@ var PENDING = void 0;
 var FULFILLED = 1;
 var REJECTED = 2;
 
-var TRY_CATCH_ERROR = { error: null };
-
 function selfFulfillment() {
   return new TypeError("You cannot resolve a promise with itself");
 }
 
 function cannotReturnOwn() {
   return new TypeError('A promises callback cannot return that same promise.');
-}
-
-function getThen(promise) {
-  try {
-    return promise.then;
-  } catch (error) {
-    TRY_CATCH_ERROR.error = error;
-    return TRY_CATCH_ERROR;
-  }
 }
 
 function tryThen(then$$1, value, fulfillmentHandler, rejectionHandler) {
@@ -620,10 +615,7 @@ function handleMaybeThenable(promise, maybeThenable, then$$1) {
   if (maybeThenable.constructor === promise.constructor && then$$1 === then && maybeThenable.constructor.resolve === resolve$1) {
     handleOwnThenable(promise, maybeThenable);
   } else {
-    if (then$$1 === TRY_CATCH_ERROR) {
-      reject(promise, TRY_CATCH_ERROR.error);
-      TRY_CATCH_ERROR.error = null;
-    } else if (then$$1 === undefined) {
+    if (then$$1 === undefined) {
       fulfill(promise, maybeThenable);
     } else if (isFunction(then$$1)) {
       handleForeignThenable(promise, maybeThenable, then$$1);
@@ -637,7 +629,14 @@ function resolve(promise, value) {
   if (promise === value) {
     reject(promise, selfFulfillment());
   } else if (objectOrFunction(value)) {
-    handleMaybeThenable(promise, value, getThen(value));
+    var then$$1 = void 0;
+    try {
+      then$$1 = value.then;
+    } catch (error) {
+      reject(promise, error);
+      return;
+    }
+    handleMaybeThenable(promise, value, then$$1);
   } else {
     fulfill(promise, value);
   }
@@ -716,31 +715,18 @@ function publish(promise) {
   promise._subscribers.length = 0;
 }
 
-function tryCatch(callback, detail) {
-  try {
-    return callback(detail);
-  } catch (e) {
-    TRY_CATCH_ERROR.error = e;
-    return TRY_CATCH_ERROR;
-  }
-}
-
 function invokeCallback(settled, promise, callback, detail) {
   var hasCallback = isFunction(callback),
       value = void 0,
       error = void 0,
-      succeeded = void 0,
-      failed = void 0;
+      succeeded = true;
 
   if (hasCallback) {
-    value = tryCatch(callback, detail);
-
-    if (value === TRY_CATCH_ERROR) {
-      failed = true;
-      error = value.error;
-      value.error = null;
-    } else {
-      succeeded = true;
+    try {
+      value = callback(detail);
+    } catch (e) {
+      succeeded = false;
+      error = e;
     }
 
     if (promise === value) {
@@ -749,14 +735,13 @@ function invokeCallback(settled, promise, callback, detail) {
     }
   } else {
     value = detail;
-    succeeded = true;
   }
 
   if (promise._state !== PENDING) {
     // noop
   } else if (hasCallback && succeeded) {
     resolve(promise, value);
-  } else if (failed) {
+  } else if (succeeded === false) {
     reject(promise, error);
   } else if (settled === FULFILLED) {
     fulfill(promise, value);
@@ -834,7 +819,15 @@ var Enumerator = function () {
 
 
     if (resolve$$1 === resolve$1) {
-      var _then = getThen(entry);
+      var _then = void 0;
+      var error = void 0;
+      var didError = false;
+      try {
+        _then = entry.then;
+      } catch (e) {
+        didError = true;
+        error = e;
+      }
 
       if (_then === then && entry._state !== PENDING) {
         this._settledAt(entry._state, i, entry._result);
@@ -843,7 +836,11 @@ var Enumerator = function () {
         this._result[i] = entry;
       } else if (c === Promise$1) {
         var promise = new c(noop);
-        handleMaybeThenable(promise, entry, _then);
+        if (didError) {
+          reject(promise, error);
+        } else {
+          handleMaybeThenable(promise, entry, _then);
+        }
         this._willSettleAt(promise, i);
       } else {
         this._willSettleAt(new c(function (resolve$$1) {
@@ -1421,15 +1418,19 @@ var Promise$1 = function () {
     var promise = this;
     var constructor = promise.constructor;
 
-    return promise.then(function (value) {
-      return constructor.resolve(callback()).then(function () {
-        return value;
+    if (isFunction(callback)) {
+      return promise.then(function (value) {
+        return constructor.resolve(callback()).then(function () {
+          return value;
+        });
+      }, function (reason) {
+        return constructor.resolve(callback()).then(function () {
+          throw reason;
+        });
       });
-    }, function (reason) {
-      return constructor.resolve(callback()).then(function () {
-        throw reason;
-      });
-    });
+    }
+
+    return promise.then(callback, callback);
   };
 
   return Promise;
@@ -1554,18 +1555,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     }
 
-    var param = {
+    const param = {
         app: params.app,
         query: params.query || '',
         fields: params.fields || [],
         totalCount: params.totalCount || false
     };
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/records', 'GET', param, isGuest);
 };
@@ -1603,16 +1604,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     }
 
-    var param = {
+    const param = {
         app: params.app,
         record: params.record
     };
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/record', 'POST', param, isGuest);
 };
@@ -1660,7 +1661,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!Array.isArray(params.records)) {
@@ -1671,8 +1672,8 @@ exports.default = function (params) {
         return (0, _createError2.default)(_errorMessages2.default.emptyArray.records);
     }
 
-    var isGuest = Boolean(params.isGuest);
-    var param = (0, _makeBulkParam2.default)({
+    const isGuest = Boolean(params.isGuest);
+    const param = (0, _makeBulkParam2.default)({
         app: params.app,
         records: params.records,
         method: 'POST',
@@ -1720,14 +1721,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!params.id && !params.updateKey) {
         return (0, _createError2.default)(_errorMessages2.default.required.idOrUpdateKey);
     }
 
-    var param = {
+    const param = {
         app: params.app,
         record: params.record
     };
@@ -1740,7 +1741,7 @@ exports.default = function (params) {
         param.updateKey = params.updateKey;
     }
 
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/record', 'PUT', param, isGuest);
 };
@@ -1788,7 +1789,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!Array.isArray(params.records)) {
@@ -1799,8 +1800,8 @@ exports.default = function (params) {
         return (0, _createError2.default)(_errorMessages2.default.emptyArray.records);
     }
 
-    var isGuest = Boolean(params.isGuest);
-    var param = (0, _makeBulkParam2.default)({
+    const isGuest = Boolean(params.isGuest);
+    const param = (0, _makeBulkParam2.default)({
         app: params.app,
         records: params.records,
         method: 'PUT',
@@ -1854,7 +1855,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!Array.isArray(params.ids)) {
@@ -1865,8 +1866,8 @@ exports.default = function (params) {
         return (0, _createError2.default)(_errorMessages2.default.emptyArray.ids);
     }
 
-    var isGuest = Boolean(params.isGuest);
-    var param = (0, _makeBulkParam2.default)({
+    const isGuest = Boolean(params.isGuest);
+    const param = (0, _makeBulkParam2.default)({
         app: params.app,
         ids: params.ids,
         revisions: params.revisions,
@@ -1919,7 +1920,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!Array.isArray(params.ids)) {
@@ -1928,18 +1929,18 @@ exports.default = function (params) {
         return (0, _createError2.default)(_errorMessages2.default.emptyArray.ids);
     }
 
-    var results = [];
+    let results = [];
 
-    var deleteAll = function deleteAll(beginNum) {
-        var begin = beginNum || 0;
-        var isGuest = Boolean(params.isGuest);
-        var param = {
+    const deleteAll = beginNum => {
+        let begin = beginNum || 0;
+        const isGuest = Boolean(params.isGuest);
+        const param = {
             app: params.app,
             ids: (0, _sliceArray2.default)(params.ids, begin),
             isGuest: isGuest
         };
 
-        return (0, _deleteRecords2.default)(param).then(function (response) {
+        return (0, _deleteRecords2.default)(param).then(response => {
             results = results.concat(response.results);
             begin += _limit2.default.bulk;
             if (params.ids.length <= begin) {
@@ -3890,9 +3891,21 @@ var _updateCustomization = __webpack_require__(46);
 
 var _updateCustomization2 = _interopRequireDefault(_updateCustomization);
 
+var _postCursor = __webpack_require__(47);
+
+var _postCursor2 = _interopRequireDefault(_postCursor);
+
+var _getCursor = __webpack_require__(48);
+
+var _getCursor2 = _interopRequireDefault(_getCursor);
+
+var _deleteCursor = __webpack_require__(49);
+
+var _deleteCursor2 = _interopRequireDefault(_deleteCursor);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var kintoneUtility = {
+const kintoneUtility = {
     rest: {
         getRecord: _getRecord2.default,
         getRecords: _getRecords2.default,
@@ -3926,7 +3939,11 @@ var kintoneUtility = {
         clearUserAuth: _clearUserAuth2.default,
         clearApiTokenAuth: _clearApiTokenAuth2.default,
         clearDomain: _clearDomain2.default,
-        clearGuestSpaceId: _clearGuestSpaceId2.default
+        clearGuestSpaceId: _clearGuestSpaceId2.default,
+
+        postCursor: _postCursor2.default,
+        getCursor: _getCursor2.default,
+        deleteCursor: _deleteCursor2.default
     },
     ui: {}
 };
@@ -3967,18 +3984,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!(params && params.id)) {
         return (0, _createError2.default)(_errorMessages2.default.required.id);
     }
 
-    var param = {
+    const param = {
         app: params.app,
         id: params.id
     };
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/record', 'GET', param, isGuest);
 };
@@ -4200,35 +4217,35 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return  {object} result
  */
-/*eslint no-underscore-dangle: 0*/
-exports.default = function (api, method, param, isGuest) {
-    var _makeRequestURL = function _makeRequestURL() {
-        var _method = encodeURIComponent(method);
-        var hostname = kintoneUtility.rest.domain ? kintoneUtility.rest.domain : location.hostname;
+/* eslint no-underscore-dangle: 0*/
+exports.default = (api, method, param, isGuest) => {
+    const _makeRequestURL = () => {
+        const _method = encodeURIComponent(method);
+        const hostname = kintoneUtility.rest.domain ? kintoneUtility.rest.domain : location.hostname;
         if (!hostname) {
             return false;
         }
         if (kintoneUtility.rest.guestSpaceId) {
-            var urlParts = api.split('/');
-            return 'https://' + hostname + '/k/guest/' + kintoneUtility.rest.guestSpaceId + '/' + (urlParts[2] + '/' + urlParts[3] + '.json?_method=' + _method);
+            const urlParts = api.split('/');
+            return `https://${hostname}/k/guest/${kintoneUtility.rest.guestSpaceId}/` + `${urlParts[2]}/${urlParts[3]}.json?_method=${_method}`;
         } else if (!isGuest) {
-            return 'https://' + hostname + api + '.json?_method=' + _method;
+            return `https://${hostname}${api}.json?_method=${_method}`;
         } else if (window && window.kintone && isGuest) {
             return kintone.api.url(api, isGuest);
         }
     };
 
-    var _setOverrideHeader = function _setOverrideHeader(xhr) {
+    const _setOverrideHeader = xhr => {
         xhr.setRequestHeader('X-HTTP-Method-Override', method);
     };
 
-    var _setBasicAuthHeader = function _setBasicAuthHeader(xhr) {
+    const _setBasicAuthHeader = xhr => {
         if (kintoneUtility.rest.basicAuthBase64) {
-            xhr.setRequestHeader('Authorization', 'Basic ' + kintoneUtility.rest.basicAuthBase64);
+            xhr.setRequestHeader('Authorization', `Basic ${kintoneUtility.rest.basicAuthBase64}`);
         }
     };
 
-    var _setUserAuthHeader = function _setUserAuthHeader(xhr) {
+    const _setUserAuthHeader = xhr => {
         if (kintoneUtility.rest.userAuthBase64) {
             xhr.setRequestHeader('X-Cybozu-Authorization', kintoneUtility.rest.userAuthBase64);
             return true;
@@ -4236,7 +4253,7 @@ exports.default = function (api, method, param, isGuest) {
         return false;
     };
 
-    var _setApiTokenAuthHeader = function _setApiTokenAuthHeader(xhr) {
+    const _setApiTokenAuthHeader = xhr => {
         if (kintoneUtility.rest.apiToken) {
             xhr.setRequestHeader('X-Cybozu-API-Token', kintoneUtility.rest.apiToken);
             return true;
@@ -4244,13 +4261,13 @@ exports.default = function (api, method, param, isGuest) {
         return false;
     };
 
-    var _setRequestToken = function _setRequestToken() {
+    const _setRequestToken = () => {
         if (window && window.kintone) {
-            param['__REQUEST_TOKEN__'] = kintone.getRequestToken();
+            param.__REQUEST_TOKEN__ = kintone.getRequestToken();
         }
     };
 
-    var _setHeaders = function _setHeaders(xhr) {
+    const _setHeaders = xhr => {
         if (!(api.indexOf('file') > -1) || method !== 'POST') {
             xhr.setRequestHeader('Content-Type', 'application/json');
         }
@@ -4258,15 +4275,15 @@ exports.default = function (api, method, param, isGuest) {
 
         _setOverrideHeader(xhr);
         _setBasicAuthHeader(xhr);
-        var isUserAuth = _setUserAuthHeader(xhr);
-        var isApiTokenAuth = _setApiTokenAuthHeader(xhr);
+        const isUserAuth = _setUserAuthHeader(xhr);
+        const isApiTokenAuth = _setApiTokenAuthHeader(xhr);
         if (!isUserAuth && !isApiTokenAuth) {
             return true;
         }
         return false;
     };
 
-    var _send = function _send(xhr, resolve, reject) {
+    const _send = (xhr, resolve, reject) => {
         xhr.onload = function (r) {
             if (xhr.status === 200) {
                 resolve(JSON.parse(xhr.responseText));
@@ -4277,7 +4294,7 @@ exports.default = function (api, method, param, isGuest) {
         xhr.send(JSON.stringify(param));
     };
 
-    var _getFile = function _getFile(xhr, resolve, reject) {
+    const _getFile = (xhr, resolve, reject) => {
         xhr.responseType = 'blob';
         xhr.onload = function (r) {
             if (xhr.status === 200) {
@@ -4289,10 +4306,10 @@ exports.default = function (api, method, param, isGuest) {
         xhr.send(JSON.stringify(param));
     };
 
-    var _postFile = function _postFile(xhr, resolve, reject) {
-        var formData = new FormData();
-        if (param['__REQUEST_TOKEN__']) {
-            formData.append('__REQUEST_TOKEN__', param['__REQUEST_TOKEN__']);
+    const _postFile = (xhr, resolve, reject) => {
+        const formData = new FormData();
+        if (param.__REQUEST_TOKEN__) {
+            formData.append('__REQUEST_TOKEN__', param.__REQUEST_TOKEN__);
         }
         formData.append('file', param.blob, param.fileName);
         xhr.onload = function (r) {
@@ -4305,22 +4322,22 @@ exports.default = function (api, method, param, isGuest) {
         xhr.send(formData);
     };
 
-    return new _es6Promise.Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        var url = _makeRequestURL();
+    return new _es6Promise.Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const url = _makeRequestURL();
         if (!url) {
             reject(_errorMessages2.default.useSetDomain);
         } else {
             xhr.open('POST', url, true);
-            var isNeededCSRFToken = _setHeaders(xhr);
+            const isNeededCSRFToken = _setHeaders(xhr);
             if (isNeededCSRFToken) {
                 _setRequestToken();
             }
             if (!(api.indexOf('file') > -1)) {
-                //record
+                // record
                 _send(xhr, resolve, reject);
             } else if (method === 'GET') {
-                //file
+                // file
                 _getFile(xhr, resolve, reject);
             } else {
                 _postFile(xhr, resolve, reject);
@@ -4371,7 +4388,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!Array.isArray(params.records)) {
@@ -4380,18 +4397,18 @@ exports.default = function (params) {
         return (0, _createError2.default)(_errorMessages2.default.emptyArray.records);
     }
 
-    var results = [];
+    let results = [];
 
-    var postAll = function postAll(beginNum) {
-        var begin = beginNum || 0;
-        var isGuest = Boolean(params.isGuest);
-        var param = {
+    const postAll = beginNum => {
+        let begin = beginNum || 0;
+        const isGuest = Boolean(params.isGuest);
+        const param = {
             app: params.app,
             records: (0, _sliceArray2.default)(params.records, begin),
             isGuest: isGuest
         };
 
-        return (0, _postRecords2.default)(param).then(function (response) {
+        return (0, _postRecords2.default)(param).then(response => {
             results = results.concat(response.results);
             begin += _limit2.default.bulk;
             if (params.records.length <= begin) {
@@ -4448,7 +4465,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!Array.isArray(params.records)) {
@@ -4457,18 +4474,18 @@ exports.default = function (params) {
         return (0, _createError2.default)(_errorMessages2.default.emptyArray.records);
     }
 
-    var results = [];
+    let results = [];
 
-    var putAll = function putAll(beginNum) {
-        var begin = beginNum || 0;
-        var isGuest = Boolean(params.isGuest);
-        var param = {
+    const putAll = beginNum => {
+        let begin = beginNum || 0;
+        const isGuest = Boolean(params.isGuest);
+        const param = {
             app: params.app,
             records: (0, _sliceArray2.default)(params.records, begin),
             isGuest: isGuest
         };
 
-        return (0, _putRecords2.default)(param).then(function (response) {
+        return (0, _putRecords2.default)(param).then(response => {
             results = results.concat(response.results);
             begin += _limit2.default.bulk;
             if (params.records.length <= begin) {
@@ -4513,23 +4530,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     params.fields = ['$id'];
-    return (0, _getAllRecordsByQuery2.default)(params).then(function (resp) {
-        var ids = [];
-        var records = resp.records;
+    return (0, _getAllRecordsByQuery2.default)(params).then(resp => {
+        const ids = [];
+        const records = resp.records;
         if (!records || !records.length) {
             return {};
         }
-        for (var i = 0; i < records.length; i++) {
+        for (let i = 0; i < records.length; i++) {
             ids.push(records[i].$id.value);
         }
-        var param = {
+        const param = {
             app: params.app,
             ids: ids,
             isGuest: params.isGuest
         };
-        return (0, _deleteAllRecords2.default)(param).then(function (response) {
+        return (0, _deleteAllRecords2.default)(param).then(response => {
             return response;
         });
     });
@@ -4579,26 +4596,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!params.updateKey || !params.updateKey.field || !params.updateKey.value && params.updateKey.value !== '') {
         return (0, _createError2.default)(_errorMessages2.default.required.updateKey);
     }
 
-    params.query = params.updateKey.field + ' = "' + params.updateKey.value + '"';
-    return (0, _getRecords2.default)(params).then(function (resp) {
+    params.query = `${params.updateKey.field} = "${params.updateKey.value}"`;
+    return (0, _getRecords2.default)(params).then(resp => {
         if (params.updateKey.value === '' || resp.records.length < 1) {
-            //post
+            // post
             params.record[params.updateKey.field] = {
                 value: params.updateKey.value
             };
             return (0, _postRecord2.default)(params);
         } else if (resp.records.length === 1) {
-            //put
+            // put
             return (0, _putRecord2.default)(params);
         }
-        //not unique
+        // not unique
         return (0, _createError2.default)(_errorMessages2.default.notUniqueField);
     });
 };
@@ -4650,7 +4667,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     } else if (!Array.isArray(params.records)) {
@@ -4661,52 +4678,52 @@ exports.default = function (params) {
         return (0, _createError2.default)(_errorMessages2.default.emptyArray.records);
     }
 
-    var doesExistSameFieldValue = function doesExistSameFieldValue(allRecords, comparedRecord) {
+    const doesExistSameFieldValue = (allRecords, comparedRecord) => {
         if (comparedRecord.updateKey.value === '') {
-            //updateKey.value is '' => post
+            // updateKey.value is '' => post
             return false;
         }
-        for (var i = 0; i < allRecords.length; i++) {
+        for (let i = 0; i < allRecords.length; i++) {
             if (allRecords[i][comparedRecord.updateKey.field].value === comparedRecord.updateKey.value) {
-                //exist => put
+                // exist => put
                 return true;
             }
         }
-        //doesn't exist => post
+        // doesn't exist => post
         return false;
     };
 
-    var sendUpsertBulkRequest = function sendUpsertBulkRequest(postRecords, putRecords) {
-        var isGuest = Boolean(params.isGuest);
-        var postBulkParam = (0, _makeBulkParam2.default)({
+    const sendUpsertBulkRequest = (postRecords, putRecords) => {
+        const isGuest = Boolean(params.isGuest);
+        const postBulkParam = (0, _makeBulkParam2.default)({
             app: params.app,
             records: postRecords,
             method: 'POST',
             isGuest: isGuest
         });
-        var putBulkParam = (0, _makeBulkParam2.default)({
+        const putBulkParam = (0, _makeBulkParam2.default)({
             app: params.app,
             records: putRecords,
             method: 'PUT',
             isGuest: isGuest
         });
-        var param = {
+        const param = {
             requests: postBulkParam.requests.concat(putBulkParam.requests)
         };
 
         return (0, _sendRequest2.default)('/k/v1/bulkRequest', 'POST', param, isGuest);
     };
 
-    return (0, _getAllRecordsByQuery2.default)(params).then(function (resp) {
-        var allRecords = resp.records;
-        var records = params.records;
-        var putRecords = [];
-        var postRecords = [];
-        for (var i = 0; i < records.length; i++) {
+    return (0, _getAllRecordsByQuery2.default)(params).then(resp => {
+        const allRecords = resp.records;
+        const records = params.records;
+        const putRecords = [];
+        const postRecords = [];
+        for (let i = 0; i < records.length; i++) {
             if (doesExistSameFieldValue(allRecords, records[i])) {
                 putRecords.push(records[i]);
             } else {
-                var record = records[i].record;
+                const record = records[i].record;
                 record[records[i].updateKey.field] = {
                     value: records[i].updateKey.value
                 };
@@ -4739,11 +4756,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {string} userName
  *  @param {string} password
  */
-exports.default = function (userName, password) {
+exports.default = (userName, password) => {
     if (!userName || !password) {
         throw _errorMessages2.default.emptyUserNameOrPass;
     }
-    kintoneUtility.rest.basicAuthBase64 = typeof Buffer !== 'undefined' ? new Buffer(userName + ':' + password).toString('base64') : btoa(userName + ':' + password);
+    kintoneUtility.rest.basicAuthBase64 = typeof Buffer !== 'undefined' ? new Buffer(`${userName}:${password}`).toString('base64') : btoa(`${userName}:${password}`);
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16).Buffer))
 
@@ -5027,11 +5044,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  @param {string} loginName
  *  @param {string} password
  */
-exports.default = function (loginName, password) {
+exports.default = (loginName, password) => {
     if (!loginName || !password) {
         throw _errorMessages2.default.emptyLoginNameOrPass;
     }
-    kintoneUtility.rest.userAuthBase64 = typeof Buffer !== 'undefined' ? new Buffer(loginName + ':' + password).toString('base64') : btoa(loginName + ':' + password);
+    kintoneUtility.rest.userAuthBase64 = typeof Buffer !== 'undefined' ? new Buffer(`${loginName}:${password}`).toString('base64') : btoa(`${loginName}:${password}`);
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16).Buffer))
 
@@ -5055,7 +5072,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: setApiTokenAuth
  *  @param {string} apiToken
  */
-exports.default = function (apiToken) {
+exports.default = apiToken => {
     if (!apiToken) {
         throw _errorMessages2.default.emptyApiToken;
     }
@@ -5082,7 +5099,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: setDomain
  *  @param {string} domain
  */
-exports.default = function (domain) {
+exports.default = domain => {
     if (!domain) {
         throw _errorMessages2.default.emptyDomain;
     }
@@ -5109,7 +5126,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /** Function: setGuestSpaceId
  *  @param {number} guestSpaceId
  */
-exports.default = function (guestSpaceId) {
+exports.default = guestSpaceId => {
     if (!guestSpaceId) {
         throw _errorMessages2.default.emptyGuestSpaceId;
     }
@@ -5129,7 +5146,7 @@ Object.defineProperty(exports, "__esModule", {
 
 /** Function: clearBasicAuth
  */
-exports.default = function () {
+exports.default = () => {
   kintoneUtility.rest.basicAuthBase64 = undefined;
 };
 
@@ -5146,7 +5163,7 @@ Object.defineProperty(exports, "__esModule", {
 
 /** Function: clearUserAuth
  */
-exports.default = function () {
+exports.default = () => {
   kintoneUtility.rest.userAuthBase64 = undefined;
 };
 
@@ -5163,7 +5180,7 @@ Object.defineProperty(exports, "__esModule", {
 
 /** Function: clearApiTokenAuth
  */
-exports.default = function () {
+exports.default = () => {
   kintoneUtility.rest.apiToken = undefined;
 };
 
@@ -5180,7 +5197,7 @@ Object.defineProperty(exports, "__esModule", {
 
 /** Function: clearDomain
  */
-exports.default = function () {
+exports.default = () => {
   kintoneUtility.rest.domain = undefined;
 };
 
@@ -5197,7 +5214,7 @@ Object.defineProperty(exports, "__esModule", {
 
 /** Function: clearGuestSpaceId
  */
-exports.default = function () {
+exports.default = () => {
   kintoneUtility.rest.guestSpaceId = undefined;
 };
 
@@ -5233,15 +5250,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.fileKey)) {
         return (0, _createError2.default)(_errorMessages2.default.required.fileKey);
     }
 
-    var param = {
+    const param = {
         fileKey: params.fileKey
     };
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/file', 'GET', param, isGuest);
 };
@@ -5279,16 +5296,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.blob && params.fileName)) {
         return (0, _createError2.default)(_errorMessages2.default.required.fileNameOrBlob);
     }
 
-    var param = {
+    const param = {
         fileName: params.fileName,
         blob: params.blob
     };
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/file', 'POST', param, isGuest);
 };
@@ -5327,20 +5344,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     }
 
-    var isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
-    var api = isPreview ? '/k/v1/preview/app/form/fields' : '/k/v1/app/form/fields';
-    var param = {
+    const isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
+    const api = isPreview ? '/k/v1/preview/app/form/fields' : '/k/v1/app/form/fields';
+    const param = {
         app: params.app
     };
     if (params.hasOwnProperty('lang')) {
         param.lang = params.lang;
     }
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)(api, 'GET', param, isGuest);
 };
@@ -5378,17 +5395,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     }
 
-    var isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
-    var api = isPreview ? '/k/v1/preview/app/form/layout' : '/k/v1/app/form/layout';
-    var param = {
+    const isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
+    const api = isPreview ? '/k/v1/preview/app/form/layout' : '/k/v1/app/form/layout';
+    const param = {
         app: params.app
     };
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)(api, 'GET', param, isGuest);
 };
@@ -5428,18 +5445,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.apps)) {
         return (0, _createError2.default)(_errorMessages2.default.required.apps);
     }
 
-    var param = {
+    const param = {
         apps: params.apps
     };
     if (params.hasOwnProperty('revert')) {
         param.revert = Boolean(params.revert);
     }
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/preview/app/deploy', 'POST', param, isGuest);
 };
@@ -5477,15 +5494,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.apps)) {
         return (0, _createError2.default)(_errorMessages2.default.required.apps);
     }
 
-    var param = {
+    const param = {
         apps: params.apps
     };
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/preview/app/deploy', 'GET', param, isGuest);
 };
@@ -5523,17 +5540,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     }
 
-    var isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
-    var url = isPreview ? '/k/v1/preview/app/customize' : '/k/v1/app/customize';
-    var param = {
+    const isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
+    const url = isPreview ? '/k/v1/preview/app/customize' : '/k/v1/app/customize';
+    const param = {
         app: params.app
     };
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)(url, 'GET', param, isGuest);
 };
@@ -5588,12 +5605,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *
  *  @return {object} result
  */
-exports.default = function (params) {
+exports.default = params => {
     if (!(params && params.app)) {
         return (0, _createError2.default)(_errorMessages2.default.required.app);
     }
 
-    var param = {
+    const param = {
         app: params.app
     };
     if (params.hasOwnProperty('scope')) {
@@ -5609,9 +5626,151 @@ exports.default = function (params) {
         param.revision = Number(params.revision);
     }
 
-    var isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return (0, _sendRequest2.default)('/k/v1/preview/app/customize', 'PUT', param, isGuest);
+};
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: postCursor
+ *  @param {object} params
+ *  @param {number} params.app
+ *  @param {string} [params.query]
+ *  @param {array} [params.fields]
+ *  @param {number} [params.size]
+ *  @param {boolean} [params.isGuest]
+ *
+ *  @return {object} result
+ */
+exports.default = params => {
+    if (!(params && params.app)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.app);
+    }
+
+    const param = {
+        app: params.app,
+        id: params.id,
+        query: params.query || '',
+        fields: params.fields || [],
+        size: params.size || 100
+    };
+    const isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)('/k/v1/records/cursor', 'POST', param, isGuest);
+};
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: getCursor
+ *  @param {object} params
+ *  @param {number} params.id
+ *  @param {boolean} [params.isGuest]
+ *
+ *  @return {object} result
+ */
+exports.default = params => {
+    if (!(params && params.id)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.id);
+    }
+
+    const param = {
+        id: params.id
+    };
+    const isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)('/k/v1/records/cursor', 'GET', param, isGuest);
+};
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createError = __webpack_require__(1);
+
+var _createError2 = _interopRequireDefault(_createError);
+
+var _errorMessages = __webpack_require__(0);
+
+var _errorMessages2 = _interopRequireDefault(_errorMessages);
+
+var _sendRequest = __webpack_require__(2);
+
+var _sendRequest2 = _interopRequireDefault(_sendRequest);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/** Function: deleteCursor
+ *  @param {object} params
+ *  @param {number} params.id
+ *  @param {boolean} [params.isGuest]
+ *
+ *  @return {object} result
+ */
+exports.default = params => {
+    if (!(params && params.id)) {
+        return (0, _createError2.default)(_errorMessages2.default.required.id);
+    }
+
+    const param = {
+        id: params.id
+    };
+    const isGuest = Boolean(params.isGuest);
+
+    return (0, _sendRequest2.default)('/k/v1/records/cursor', 'DELETE', param, isGuest);
 };
 
 /***/ })
