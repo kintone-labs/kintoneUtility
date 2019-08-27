@@ -10,6 +10,7 @@ import errors from './resource/errorMessages.json';
  *
  *  @return {object} result
  */
+circle-ci-test!!!!!!!!!!!
 const getAllRecordsByQueryWithCursor = async params => {
     if (!(params && params.app)) {
         return createError(errors.required.app);
