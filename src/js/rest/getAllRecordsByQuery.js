@@ -1,7 +1,5 @@
 import createError from './common/createError';
 import errors from './resource/errorMessages.json';
-import sendRequest from './common/sendRequest';
-import limit from './resource/limit.json';
 
 /** Function: getAllRecordsByQuery
  *  @param {object} params
@@ -12,30 +10,41 @@ import limit from './resource/limit.json';
  *
  *  @return {object} result
  */
-let getAllRecordsByQuery = (params, records, offsetNum) => {
+let getAllRecordsByQueryWithCursor = async (params) => {
     if (!(params && params.app)) {
         return createError(errors.required.app);
     }
 
-    const LIMIT = limit.getRecords;
-    let allRecords = records || [];
-    let offset = offsetNum || 0;
-    let param = {
-        app: params.app,
-        query: (params.query) ? `${params.query} limit ${LIMIT} offset ${offset}` : `limit ${LIMIT} offset ${offset}`,
-        fields: params.fields || []
-    };
-    let isGuest = Boolean(params.isGuest);
+    try {
+        const cursor = await kintoneUtility.rest.postCursor({
+            app: params.app,
+            size: 500,
+            query: params.query || '',
+            fields: params.fields || [],
+        });
 
-    return sendRequest('/k/v1/records', 'GET', param, isGuest).then((response) => {
-        allRecords = allRecords.concat(response.records);
-        if (response.records.length < LIMIT) {
-            return {
-                records: allRecords
-            };
+        let {records: allRecords, next} = await kintoneUtility.rest.getCursor({
+            id: cursor.id,
+            isGuest: params.isGuest,
+        });
+
+        while (next) {
+            const res = await kintoneUtility.rest.getCursor({
+                id: cursor.id,
+                isGuest: params.isGuest,
+            });
+            next = res.next;
+            allRecords = allRecords.concat(res.records);
         }
-        return getAllRecordsByQuery(params, allRecords, offset + LIMIT);
-    });
+
+    } finally {
+        const result = await kintoneUtility.rest.deleteCursor({
+            id: cursor.id,
+            isGuest: params.isGuest,
+        });
+        console.log(`DELETE cursor:`, result);
+    }
+    return {records: allRecords};
 };
 
-export default getAllRecordsByQuery;
+export default getAllRecordsByQueryWithCursor;
