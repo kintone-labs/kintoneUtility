@@ -32,7 +32,7 @@ export default (params) => {
         return createError(errors.required.app);
     }
 
-    let param = {
+    const param = {
         app: params.app
     };
     if (params.hasOwnProperty('scope')) {
@@ -48,7 +48,7 @@ export default (params) => {
         param.revision = Number(params.revision);
     }
 
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest('/k/v1/preview/app/customize', 'PUT', param, isGuest);
 };

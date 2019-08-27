@@ -10,41 +10,40 @@ import errors from './resource/errorMessages.json';
  *
  *  @return {object} result
  */
-let getAllRecordsByQueryWithCursor = async (params) => {
+const getAllRecordsByQueryWithCursor = async(params) => {
     if (!(params && params.app)) {
         return createError(errors.required.app);
     }
 
-    try {
-        const cursor = await kintoneUtility.rest.postCursor({
-            app: params.app,
-            size: 500,
-            query: params.query || '',
-            fields: params.fields || [],
-        });
+    const cursor = await kintoneUtility.rest.postCursor({
+        app: params.app,
+        size: 500,
+        query: params.query || '',
+        fields: params.fields || []
+    });
 
+    try {
         let {records: allRecords, next} = await kintoneUtility.rest.getCursor({
             id: cursor.id,
-            isGuest: params.isGuest,
+            isGuest: params.isGuest
         });
 
         while (next) {
             const res = await kintoneUtility.rest.getCursor({
                 id: cursor.id,
-                isGuest: params.isGuest,
+                isGuest: params.isGuest
             });
             next = res.next;
             allRecords = allRecords.concat(res.records);
         }
 
+        return {records: allRecords};
     } finally {
-        const result = await kintoneUtility.rest.deleteCursor({
+        await kintoneUtility.rest.deleteCursor({
             id: cursor.id,
-            isGuest: params.isGuest,
+            isGuest: params.isGuest
         });
-        console.log(`DELETE cursor:`, result);
     }
-    return {records: allRecords};
 };
 
 export default getAllRecordsByQueryWithCursor;

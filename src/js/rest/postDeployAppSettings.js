@@ -17,13 +17,13 @@ export default (params) => {
         return createError(errors.required.apps);
     }
 
-    let param = {
+    const param = {
         apps: params.apps
     };
     if (params.hasOwnProperty('revert')) {
         param.revert = Boolean(params.revert);
     }
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest('/k/v1/preview/app/deploy', 'POST', param, isGuest);
 };

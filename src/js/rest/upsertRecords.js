@@ -26,36 +26,36 @@ export default (params) => {
         return createError(errors.emptyArray.records);
     }
 
-    let doesExistSameFieldValue = (allRecords, comparedRecord) => {
+    const doesExistSameFieldValue = (allRecords, comparedRecord) => {
         if (comparedRecord.updateKey.value === '') {
-            //updateKey.value is '' => post
+            // updateKey.value is '' => post
             return false;
         }
         for (let i = 0; i < allRecords.length; i++) {
             if (allRecords[i][comparedRecord.updateKey.field].value === comparedRecord.updateKey.value) {
-                //exist => put
+                // exist => put
                 return true;
             }
         }
-        //doesn't exist => post
+        // doesn't exist => post
         return false;
     };
 
-    let sendUpsertBulkRequest = (postRecords, putRecords) => {
-        let isGuest = Boolean(params.isGuest);
-        let postBulkParam = makeBulkParam({
+    const sendUpsertBulkRequest = (postRecords, putRecords) => {
+        const isGuest = Boolean(params.isGuest);
+        const postBulkParam = makeBulkParam({
             app: params.app,
             records: postRecords,
             method: 'POST',
             isGuest: isGuest
         });
-        let putBulkParam = makeBulkParam({
+        const putBulkParam = makeBulkParam({
             app: params.app,
             records: putRecords,
             method: 'PUT',
             isGuest: isGuest
         });
-        let param = {
+        const param = {
             requests: postBulkParam.requests.concat(putBulkParam.requests)
         };
 
@@ -63,15 +63,15 @@ export default (params) => {
     };
 
     return getAllRecordsByQuery(params).then((resp) => {
-        let allRecords = resp.records;
-        let records = params.records;
-        let putRecords = [];
-        let postRecords = [];
+        const allRecords = resp.records;
+        const records = params.records;
+        const putRecords = [];
+        const postRecords = [];
         for (let i = 0; i < records.length; i++) {
             if (doesExistSameFieldValue(allRecords, records[i])) {
                 putRecords.push(records[i]);
             } else {
-                let record = records[i].record;
+                const record = records[i].record;
                 record[records[i].updateKey.field] = {
                     value: records[i].updateKey.value
                 };

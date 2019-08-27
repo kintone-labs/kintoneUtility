@@ -13,15 +13,15 @@ import deleteAllRecords from './deleteAllRecords';
 export default (params) => {
     params.fields = ['$id'];
     return getAllRecordsByQuery(params).then((resp) => {
-        let ids = [];
-        let records = resp.records;
+        const ids = [];
+        const records = resp.records;
         if (!records || !records.length) {
             return {};
         }
         for (let i = 0; i < records.length; i++) {
             ids.push(records[i].$id.value);
         }
-        let param = {
+        const param = {
             app: params.app,
             ids: ids,
             isGuest: params.isGuest

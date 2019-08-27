@@ -22,7 +22,7 @@ export default (params) => {
         return createError(errors.required.idOrUpdateKey);
     }
 
-    let param = {
+    const param = {
         app: params.app,
         record: params.record
     };
@@ -35,7 +35,7 @@ export default (params) => {
         param.updateKey = params.updateKey;
     }
 
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest('/k/v1/record', 'PUT', param, isGuest);
 };

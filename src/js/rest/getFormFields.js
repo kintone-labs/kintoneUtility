@@ -16,15 +16,15 @@ export default (params) => {
         return createError(errors.required.app);
     }
 
-    let isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
-    let api = isPreview ? '/k/v1/preview/app/form/fields' : '/k/v1/app/form/fields';
-    let param = {
+    const isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
+    const api = isPreview ? '/k/v1/preview/app/form/fields' : '/k/v1/app/form/fields';
+    const param = {
         app: params.app
     };
     if (params.hasOwnProperty('lang')) {
         param.lang = params.lang;
     }
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest(api, 'GET', param, isGuest);
 };

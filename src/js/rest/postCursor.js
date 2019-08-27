@@ -17,14 +17,14 @@ export default (params) => {
         return createError(errors.required.app);
     }
 
-    let param = {
+    const param = {
         app: params.app,
         id: params.id,
         query: params.query || '',
         fields: params.fields || [],
         size: params.size || 100
     };
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest('/k/v1/records/cursor', 'POST', param, isGuest);
 };

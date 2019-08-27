@@ -34,7 +34,7 @@ import postCursor from './rest/postCursor';
 import getCursor from './rest/getCursor';
 import deleteCursor from './rest/deleteCursor';
 
-let kintoneUtility = {
+const kintoneUtility = {
     rest: {
         getRecord,
         getRecords,

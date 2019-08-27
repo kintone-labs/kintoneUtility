@@ -15,12 +15,12 @@ export default (params) => {
         return createError(errors.required.app);
     }
 
-    let isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
-    let api = isPreview ? '/k/v1/preview/app/form/layout' : '/k/v1/app/form/layout';
-    let param = {
+    const isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
+    const api = isPreview ? '/k/v1/preview/app/form/layout' : '/k/v1/app/form/layout';
+    const param = {
         app: params.app
     };
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest(api, 'GET', param, isGuest);
 };

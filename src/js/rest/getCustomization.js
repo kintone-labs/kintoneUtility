@@ -15,12 +15,12 @@ export default (params) => {
         return createError(errors.required.app);
     }
 
-    let isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
-    let url = isPreview ? '/k/v1/preview/app/customize' : '/k/v1/app/customize';
-    let param = {
+    const isPreview = params.hasOwnProperty('isPreview') ? Boolean(params.isPreview) : false;
+    const url = isPreview ? '/k/v1/preview/app/customize' : '/k/v1/app/customize';
+    const param = {
         app: params.app
     };
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest(url, 'GET', param, isGuest);
 };

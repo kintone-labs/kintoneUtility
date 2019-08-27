@@ -13,11 +13,11 @@ import limit from '../resource/limit.json';
  */
 export default (params) => {
     const LIMIT = limit.records;
-    let bulkParam = {
+    const bulkParam = {
         requests: []
     };
-    let length = (params.records) ? params.records.length : params.ids.length;
-    let loopTimes = Math.ceil(length / LIMIT);
+    const length = (params.records) ? params.records.length : params.ids.length;
+    const loopTimes = Math.ceil(length / LIMIT);
     let begin = 0;
     let api;
     if (kintoneUtility.rest.guestSpaceId) {
@@ -28,7 +28,7 @@ export default (params) => {
         api = '/k/v1/records.json';
     }
     for (let i = 0; i < loopTimes; i++) {
-        let request = {
+        const request = {
             method: params.method,
             api: api,
             payload: {

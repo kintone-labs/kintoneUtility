@@ -15,11 +15,11 @@ export default (params) => {
         return createError(errors.required.fileNameOrBlob);
     }
 
-    let param = {
+    const param = {
         fileName: params.fileName,
         blob: params.blob
     };
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest('/k/v1/file', 'POST', param, isGuest);
 };

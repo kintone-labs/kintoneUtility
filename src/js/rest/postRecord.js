@@ -15,11 +15,11 @@ export default (params) => {
         return createError(errors.required.app);
     }
 
-    let param = {
+    const param = {
         app: params.app,
         record: params.record
     };
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest('/k/v1/record', 'POST', param, isGuest);
 };

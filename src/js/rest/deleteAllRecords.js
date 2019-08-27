@@ -24,10 +24,10 @@ export default (params) => {
 
     let results = [];
 
-    let deleteAll = (beginNum) => {
+    const deleteAll = (beginNum) => {
         let begin = beginNum || 0;
-        let isGuest = Boolean(params.isGuest);
-        let param = {
+        const isGuest = Boolean(params.isGuest);
+        const param = {
             app: params.app,
             ids: sliceArray(params.ids, begin),
             isGuest: isGuest

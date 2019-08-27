@@ -14,10 +14,10 @@ export default (params) => {
         return createError(errors.required.fileKey);
     }
 
-    let param = {
+    const param = {
         fileKey: params.fileKey
     };
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest('/k/v1/file', 'GET', param, isGuest);
 };

@@ -25,8 +25,8 @@ export default (params) => {
         return createError(errors.emptyArray.records);
     }
 
-    let isGuest = Boolean(params.isGuest);
-    let param = makeBulkParam({
+    const isGuest = Boolean(params.isGuest);
+    const param = makeBulkParam({
         app: params.app,
         records: params.records,
         method: 'POST',

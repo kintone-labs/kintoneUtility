@@ -14,10 +14,10 @@ export default (params) => {
         return createError(errors.required.id);
     }
 
-    let param = {
+    const param = {
         id: params.id
     };
-    let isGuest = Boolean(params.isGuest);
+    const isGuest = Boolean(params.isGuest);
 
     return sendRequest('/k/v1/records/cursor', 'GET', param, isGuest);
 };

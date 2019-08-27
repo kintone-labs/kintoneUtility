@@ -24,10 +24,10 @@ export default (params) => {
 
     let results = [];
 
-    let putAll = (beginNum) => {
+    const putAll = (beginNum) => {
         let begin = beginNum || 0;
-        let isGuest = Boolean(params.isGuest);
-        let param = {
+        const isGuest = Boolean(params.isGuest);
+        const param = {
             app: params.app,
             records: sliceArray(params.records, begin),
             isGuest: isGuest

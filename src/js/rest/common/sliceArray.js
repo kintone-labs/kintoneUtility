@@ -7,6 +7,6 @@ import limit from '../resource/limit.json';
  *  @return {object} result
  */
 export default (arr, begin) => {
-    let end = ((arr.length - begin) > limit.bulk) ? begin + limit.bulk : arr.length;
+    const end = ((arr.length - begin) > limit.bulk) ? begin + limit.bulk : arr.length;
     return arr.slice(begin, end);
 };

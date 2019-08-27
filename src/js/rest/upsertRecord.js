@@ -29,16 +29,16 @@ export default (params) => {
     params.query = `${params.updateKey.field} = "${params.updateKey.value}"`;
     return getRecords(params).then((resp) => {
         if (params.updateKey.value === '' || resp.records.length < 1) {
-            //post
+            // post
             params.record[params.updateKey.field] = {
                 value: params.updateKey.value
             };
             return postRecord(params);
         } else if (resp.records.length === 1) {
-            //put
+            // put
             return putRecord(params);
         }
-        //not unique
+        // not unique
         return createError(errors.notUniqueField);
     });
 };
