@@ -10,7 +10,7 @@ import errors from './resource/errorMessages.json';
  *
  *  @return {object} result
  */
-const getAllRecordsByQueryWithCursor = async(params) => {
+const getAllRecordsByQueryWithCursor = async params => {
     if (!(params && params.app)) {
         return createError(errors.required.app);
     }
@@ -22,11 +22,13 @@ const getAllRecordsByQueryWithCursor = async(params) => {
         fields: params.fields || []
     });
 
+    let allRecords;
     try {
-        let {records: allRecords, next} = await kintoneUtility.rest.getCursor({
+        let {records, next} = await kintoneUtility.rest.getCursor({
             id: cursor.id,
             isGuest: params.isGuest
         });
+        allRecords = records;
 
         while (next) {
             const res = await kintoneUtility.rest.getCursor({
@@ -39,10 +41,12 @@ const getAllRecordsByQueryWithCursor = async(params) => {
 
         return {records: allRecords};
     } finally {
-        await kintoneUtility.rest.deleteCursor({
-            id: cursor.id,
-            isGuest: params.isGuest
-        });
+        if (allRecords.length !== Number.parseInt(cursor.totalCount, 10)) {
+            await kintoneUtility.rest.deleteCursor({
+                id: cursor.id,
+                isGuest: params.isGuest
+            });
+        }
     }
 };
 
