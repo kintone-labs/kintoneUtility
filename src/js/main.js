@@ -30,6 +30,9 @@ import postDeployAppSettings from './rest/postDeployAppSettings';
 import getAppDeployStatus from './rest/getAppDeployStatus';
 import getCustomization from './rest/getCustomization';
 import updateCustomization from './rest/updateCustomization';
+import postCursor from './rest/postCursor';
+import getCursor from './rest/getCursor';
+import deleteCursor from './rest/deleteCursor';
 
 let kintoneUtility = {
     rest: {
@@ -65,7 +68,11 @@ let kintoneUtility = {
         clearUserAuth,
         clearApiTokenAuth,
         clearDomain,
-        clearGuestSpaceId
+        clearGuestSpaceId,
+
+        postCursor,
+        getCursor,
+        deleteCursor
     },
     ui: {}
 };
