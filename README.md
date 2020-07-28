@@ -1,6 +1,6 @@
 # kintone Utility for JavaScript (Deprecated)
 
-## This library has been deprecated. Please use [@kintone/kintone-js-sdk](https://www.npmjs.com/package/@kintone/kintone-js-sdk)
+## :warning::warning: This library has been deprecated.Please use [@kintone/rest-api-client](https://github.com/kintone/js-sdk/tree/master/packages/rest-api-client) instead. :warning::warning: 
 
 This is a library in order to simplify the kintone customization.
 
