@@ -880,9 +880,9 @@ kintoneUtility.rest.updateCustomization({
   desktop: {
     js: [
       {
-        type: 'URL',
-        url: 'https://kintone.github.io/kintoneUtility/kintoneUtility.min.js',
-      },
+        type: 'FILE',
+        file: { fileKey: 'xxxxxxxxxxxxxxxx' },
+      }
     ],
     css: [
       {
